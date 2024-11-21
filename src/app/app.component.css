@@ -1,0 +1,129 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #4CAF50;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  header p {
+    margin: 5px 0 0;
+    font-size: 1rem;
+  }
+  
+  /* Tree Container */
+  .tree {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
+  }
+  
+  .tree ul {
+    padding-left: 30px;
+    position: relative;
+  }
+  
+  .tree ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 0;
+    height: 100%;
+    border-left: 2px solid #ccc;
+  }
+  
+  .tree li {
+    margin: 10px 0;
+    position: relative;
+    list-style: none;
+  }
+  
+  .tree li::before,
+  .tree li::after {
+    content: '';
+    position: absolute;
+    left: -15px;
+    border-top: 2px solid #ccc;
+    width: 15px;
+    height: 0;
+  }
+  
+  .tree li::before {
+    top: 10px;
+  }
+  
+  .tree li::after {
+    bottom: 10px;
+  }
+  
+  .tree li:last-child::after {
+    display: none;
+  }
+  
+  .tree .person {
+    display: inline-block;
+    background-color: #e6ffe6;
+    color: #333;
+    padding: 10px 15px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tree .person:hover {
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /* Generational Styling */
+  .tree ul ul .person {
+    background-color: #f0f8ff; /* Slightly different color for children */
+    border-color: #007bff;
+  }
+  
+  .tree ul ul ul .person {
+    background-color: #fffbe6; /* Different color for grandchildren */
+    border-color: #ffa500;
+  }
+
+  .tree ul ul ul ul .person {
+    background-color: #fffbe6; /* Different color for grandchildren */
+    border-color: #0066ff;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .tree ul {
+      padding-left: 15px;
+    }
+  
+    .tree li::before,
+    .tree li::after {
+      left: -10px;
+      width: 10px;
+    }
+  
+    .tree .person {
+      font-size: 0.9rem;
+      padding: 8px 10px;
+    }
+  }
+  
