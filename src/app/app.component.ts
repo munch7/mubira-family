@@ -10,4 +10,10 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'mubira';
+
+  isDropdownOpen: { [key: string]: boolean } = {};
+
+  toggleDropdown(section: string): void {
+    this.isDropdownOpen[section] = !this.isDropdownOpen[section];
+  }
 }

@@ -3,29 +3,46 @@
     <h1>Our Family Tree</h1>
     <p>Discover the generations of our family</p>
   </header>
-
   <div class="tree">
+
+  <p>Embark on a journey through generations as we celebrate our 
+    roots and heritage. This interactive family tree allows you 
+    to explore the lives and connections of our ancestors, trace 
+    the bonds that tie us together, and discover stories that define 
+    our family's legacy. Whether you're reconnecting with familiar 
+    names or uncovering new ones, this is your gateway to preserving 
+    and cherishing our shared history. Dive in and explore the 
+    branches of our extraordinary family!
+  </p>
+
     <ul>
       <li>
-        <div class="person">Great-Grandparent</div>
-        <ul>
+        <div class="person" (click)="toggleDropdown('greatGrandparent')">
+          Mubira
+        </div>
+        <ul [class.hidden]="!isDropdownOpen['greatGrandparent']">
           <li>
-            <div class="person">Samuel Kamau</div>
-            <ul>
+            <div class="person" (click)="toggleDropdown('samuelKamau')">
+              Samuel Kamau
+            </div>
+            <ul [class.hidden]="!isDropdownOpen['samuelKamau']">
               <li>
-                <div class="person">Francis Mburu Kamau</div>
-                <ul>
-                  <li><div class="person">Child 1</div></li>
-                  <li><div class="person">Child 2</div></li>
+                <div class="person" (click)="toggleDropdown('francisMburu')">
+                  Francis Mburu Kamau
+                </div>
+                <ul [class.hidden]="!isDropdownOpen['francisMburu']">
                   <li><div class="person">Child 1</div></li>
                   <li><div class="person">Child 2</div></li>
                 </ul>
               </li>
               <li>
-                <div class="person">Moses Ngugi Kamau & Roxana Wanjai Kamau</div>
-                <ul>
+                <div class="person" (click)="toggleDropdown('mosesNgugi')">
+                  Moses Ngugi Kamau & Roxana Wanjai Kamau
+                </div>
+                <ul [class.hidden]="!isDropdownOpen['mosesNgugi']">
                   <li><div class="person">Samuel Kamau Ngugi</div></li>
-                  <li><div class="person">Penninah Njoki Ngugi</div>
+                  <li>
+                    <div class="person">Penninah Njoki Ngugi</div>
                     <ul>
                       <li><div class="person">Ahadi Wanjai</div></li>
                     </ul>
@@ -33,25 +50,6 @@
                   <li><div class="person">Kenneth Kigathi Ngugi</div></li>
                   <li><div class="person">Christine Waruga Ngugi</div></li>
                   <li><div class="person">Francis Mburu Ngugi</div></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <div class="person">Grandparent's Sibling</div>
-            <ul>
-              <li>
-                <div class="person">Cousin 1</div>
-                <ul>
-                  <li><div class="person">Child 5</div></li>
-                  <li><div class="person">Child 6</div></li>
-                </ul>
-              </li>
-              <li>
-                <div class="person">Cousin 2</div>
-                <ul>
-                  <li><div class="person">Child 7</div></li>
-                  <li><div class="person">Child 8</div></li>
                 </ul>
               </li>
             </ul>
