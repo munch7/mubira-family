@@ -132,3 +132,29 @@ button:hover {
       font-size: medium;
   }
 }
+.node {
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+}
+
+ul {
+  padding-left: 20px;
+  margin: 0;
+  border-left: 2px solid #ccc;
+}
+
+li {
+  margin-left: -18px;
+  position: relative;
+}
+
+li::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: #ccc;
+  position: absolute;
+  left: -20px;
+  top: 12px;
+}

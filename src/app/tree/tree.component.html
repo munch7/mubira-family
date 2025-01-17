@@ -1,404 +1,167 @@
 <div class="container">
-    
-    <header>
-        <h1>Our Family Tree</h1>
-        <p>Discover the generations of our family</p>
-    </header>
-    
-    <div class="tree">
-  
-        <p>Embark on a journey through generations as we celebrate our 
-          roots and heritage.
-        </p>
-        <p>
-          This interactive family tree allows you 
-          to explore the lives and connections of our ancestors, trace 
-          the bonds that tie us together, and discover stories that define 
-          our family's legacy.
-        </p>
-        <p>
-          Whether you're reconnecting with familiar 
-          names or uncovering new ones, this is your gateway to preserving 
-          and cherishing our shared history.
-        </p>
-        <p>
-          Dive in and explore the 
-          branches of our extraordinary family!
-        </p>
+  <header>
+    <h1>Our Family Tree</h1>
+    <p>Discover the generations of our family</p>
+  </header>
 
-        <hr>
+  <div class="tree">
+    <p>
+      Embark on a journey through generations as we celebrate our roots and heritage.
+    </p>
+    <p>
+      This interactive family tree allows you to explore the lives and connections of our ancestors, trace the bonds that tie us together, and discover stories that define our family's legacy.
+    </p>
+    <p>
+      Whether you're reconnecting with familiar names or uncovering new ones, this is your gateway to preserving and cherishing our shared history.
+    </p>
+    <p>
+      Dive in and explore the branches of our extraordinary family!
+    </p>
 
-        <div style="color: red">
-          * search bar goes here --- *
-        </div>
+    <hr>
 
-        <hr>
-
-        <!-- <div class="family-tree">
-          <ul class="generation">
-            <li *ngFor="let member of familyTree">
-              <button (click)="toggleDropdown(member)" class="dropdown-toggle">
-                {{ member.name }}
-              </button>
-              <ul class="generation" *ngIf="member.expanded && member.children">
-                <li *ngFor="let child of member.children">
-                  <app-family-tree [familyTree]="child.children" *ngIf="child.children?.length"></app-family-tree>
-                  <button (click)="toggleDropdown(child)" class="dropdown-toggle">
-                    {{ child.name }}
-                  </button>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div> -->
-
-        <hr>
-      
-        <ul class="generation-1">
-          <li>
-            <div class="person" (click)="toggleDropdown('greatGrandparent')">
-              Mubira
-            </div>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Kanja Mubira
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Peter Kang'atui Mubira
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Mungai Mubira
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Kimani Mubira
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Michael Ngugi (Kahonoki)
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Samuel Kamau
-                </div>
-    
-                <ul class="generation-2" [class.hidden]="!isDropdownOpen['SamuelKamau']">
-    
-                  <li>
-                    <div class="person" (click)="toggleDropdown('PenninahNjokiKamau')">
-                      Penninah Njoki Kamau
-                    </div>
-    
-                    <ul class="generation-3" [class.hidden]="!isDropdownOpen['PenninahNjokiKamau']">
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('FrancisMburuKamau')">
-                          Wauci
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['FrancisMburuKamau']">
-                          <li><div class="person">Mercy Wathoni</div></li>
-                          <li><div class="person">Waruiru</div></li>
-                          <li><div class="person">Muciru</div></li>
-                          <li><div class="person">Kamau (bayo)</div></li>
-                          <li><div class="person">Wanjiru</div></li>
-                          <li><div class="person">Gitau</div></li>
-                          <li><div class="person">Ngugi</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('FrancisMburuKamau')">
-                          Francis Mburu Kamau & Njeri
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['FrancisMburuKamau']">
-                          <li><div class="person">Brenda Njoki Mburu</div></li>
-                          <li><div class="person">Christine Mugure Mburu</div></li>
-                          <li><div class="person">Eric Kamau Mburu</div></li>
-                          <li><div class="person">Catherine Wanjiku Mburu</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('FrancisMburuKamau')">
-                          Joyce Wanjiru
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['FrancisMburuKamau']">
-                          <li><div class="person">Rose Nduta</div></li>
-                          <li><div class="person">Ann Njoki</div></li>
-                          <li><div class="person">Kamau</div></li>
-                          <li><div class="person">Kamau</div></li>
-                          <li><div class="person">Wanjiku</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('FrancisMburuKamau')">
-                          Esther Mwihaki Kamau
-                        </div>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Moses Ngugi Kamau
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Samuel Kamau Ngugi</div></li>
-                          <li>
-                            <div class="person">Penninah Njoki Ngugi</div>
-                            <ul class="generation-5">
-                              <li><div class="person">Ahadi Wanjai</div></li>
-                            </ul>
-                          </li>
-                          <li><div class="person">Kenneth Kigathi Ngugi</div></li>
-                          <li><div class="person">Christine Waruga Ngugi</div></li>
-                          <li><div class="person">Francis Mburu Ngugi</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('FrancisMburuKamau')">
-                          Bernice Muthoni
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['FrancisMburuKamau']">
-                          <li><div class="person">Christine Wambui</div></li>
-                          <li><div class="person">Fiona Njoki</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('FrancisMburuKamau')">
-                          Rose Wambui
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['FrancisMburuKamau']">
-                          <li><div class="person">Ann Njoki</div></li>
-                          <li><div class="person">Elizabeth Wanjiku</div></li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  
-                  <li>
-                    <div class="person" (click)="toggleDropdown('LeahWanjikuKamau')">
-                      Leah Wania Kamau
-                    </div>
-    
-                    <ul class="generation-3" [class.hidden]="!isDropdownOpen['LeahWanjikuKamau']">
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('francisMburu')">
-                          Wathoni
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['francisMburu']">
-                          <li><div class="person">Child 1</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Susan
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Child 1</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Mbaire
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Child 1</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Wairimu
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Child 1</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Charles Gitungo
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Kamau</div></li>
-                          <li><div class="person">Leah Wania Gitungo</div></li>
-                          <li><div class="person">Kubai</div></li>
-                          <li><div class="person">Njuguna</div></li>
-                          <li><div class="person">Njeri</div></li>
-                        </ul>
-                      </li>
-    
-                    </ul>
-                  </li>
-    
-                  <li>
-                    <div class="person" (click)="toggleDropdown('SarahWanjikuKamau')">
-                      Serah Wanjiru Kamau
-                    </div>
-    
-                    <ul class="generation-3" [class.hidden]="!isDropdownOpen['SarahWanjikuKamau']">
-                      <li>
-                        <div class="person" (click)="toggleDropdown('francisMburu')">
-                          Kennedy Ngugi Kamau
-                        </div>
-    
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['francisMburu']">
-                          <li><div class="person">Wanjiru</div></li>
-                          <li><div class="person">Nduta</div></li>
-                          <li><div class="person">Wanjiru</div></li>
-                          <li><div class="person">Wambui</div></li>
-                          <li><div class="person">Samuel Kamau Ngugi</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          George Mbugu Kamu
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Carol Wanjiru Mbugua</div></li>
-                          <li><div class="person">Wambui Mbugua</div></li>
-                          <li><div class="person">Samuel Kamau Mbugua</div></li>
-                          <li><div class="person">Wanjiku Mbugua</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Emily Wambui Kamau
-                        </div>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Charles Gitungo (Manager)
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Wanjiru Gitungo</div></li>
-                          <li><div class="person">Kamau Gitungo</div></li>
-                          <li><div class="person">Muthoni Gitungo</div></li>
-                          <li><div class="person">Wanjiku Gitungo</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Njeri
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Susan Wanjiru</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Njung'e
-                        </div>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Mbaire
-                        </div>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Maigua
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Kamau</div></li>
-                          <li><div class="person">Kamau</div></li>
-                        </ul>
-                      </li>
-    
-                      <li>
-                        <div class="person" (click)="toggleDropdown('mosesNgugi')">
-                          Njenga
-                        </div>
-                        <ul class="generation-4" [class.hidden]="!isDropdownOpen['mosesNgugi']">
-                          <li><div class="person">Kamau</div></li>
-                          <li><div class="person">Kamau</div></li>
-                        </ul>
-                      </li>
-    
-                    </ul>
-                  </li>
-    
-                </ul>
-              </li>
-            </ul>
-            
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Gitu Mubira
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Stephen King'ang'i Mubira
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Kungu Mubira
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Gitungo Mubira
-                </div>
-              </li>
-            </ul>
-    
-            <ul class="generation-2" [class.hidden]="!isDropdownOpen['greatGrandparent']">
-              <li>
-                <div class="person" (click)="toggleDropdown('SamuelKamau')">
-                  Kaguathi Mubira
-                </div>
-              </li>
-            </ul>
-    
-          </li>
-        </ul>
+    <div style="color: red">
+      <!-- Placeholder for the search bar -->
+      <input type="text" placeholder="Search family members..." />
     </div>
+
+    <hr>
+
+    <div class="family-tree">
+      <ul>
+
+        <li *ngFor="let member of familyTree">
+          <strong>{{ member.name }}</strong>
+          <!-- mubira -->
+          <div *ngIf="member.spouse?.length">
+            <span>Spouse(s):</span>
+            <ul>
+
+              <li *ngFor="let spouse of member.spouse">
+                <strong>{{ spouse.name }}</strong>
+                <!-- first wife -->
+                <div *ngIf="spouse.children?.length">
+                  <span>Children:</span>
+                  <ul>
+
+                    <li *ngFor="let child of spouse.children">
+                      <strong>{{ child.name }}</strong>
+                      <!-- kamau -->
+                      <div *ngIf="child.spouse?.length">
+                        <span>Spouse:</span>
+                        <ul>
+                          
+                          <li *ngFor="let spouse of child.spouse">
+                            <strong>{{ spouse.name }}</strong>
+                            <!-- njoki -->
+                            <div *ngIf="spouse.children?.length">
+                              <span>Children:</span>
+                              <ul>
+
+                                <li *ngFor="let child of spouse.children">
+                                  <strong>{{ child.name }}</strong>
+                                  <!-- wauci -->
+                                  <div *ngIf="child.spouse?.length">
+                                    <span>spouse:</span>
+                                    <ul>
+
+                                      <li *ngFor="let spouse of child.spouse">
+                                        <strong>{{ spouse.name }}</strong>
+                                        <!-- wanjai -->
+                                        <div *ngIf="spouse.children?.length">
+                                          <span>Children:</span>
+                                          <ul>
+
+                                            <li *ngFor="let child of spouse.children">
+                                              <strong>{{ child.name }}</strong>
+                                              <!-- njoki -->
+                                              <div *ngIf="child.spouse?.length">
+                                                <span>spouse:</span>
+                                                <ul>
+
+                                                  <li *ngFor="let spouse of child.spouse">
+                                                    <strong>{{ spouse.name }}</strong>
+                                                    <div *ngIf="spouse.children?.length">
+                                                      <span>Children:</span>
+                                                      <ul>
+
+                                                        <li *ngFor="let child of spouse.children">
+                                                          <strong>{{ child.name }}</strong>
+                                                        </li>
+
+                                                      </ul>
+                                                    </div>
+                                                  </li>
+
+                                                </ul>
+                                              </div>
+                                              <div *ngIf="child.children?.length">
+                                                <span>Chilren:</span>
+                                                <ul>
+                
+                                                  <li *ngFor="let child of child.children">
+                                                    <strong>{{ child.name }}</strong>
+                                                    <div *ngIf="spouse.children?.length">
+                                                      <span>Children:</span>
+                                                    </div>
+                                                    <div *ngIf="child.children?.length">
+                                                      <span>Chilren:</span>
+                                                      <ul>
+                                                      </ul>
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                            </li>
+
+                                          </ul>
+                                        </div>
+                                      </li>
+
+                                    </ul>
+                                  </div>
+                                  <div *ngIf="child.children?.length">
+                                    <span>Chilren:</span>
+                                    <ul>
+
+                                      <li *ngFor="let child of child.children">
+                                        <strong>{{ child.name }}</strong>
+                                        <!-- wathoni -->
+                                        <div *ngIf="spouse.children?.length">
+                                          <span>Children:</span>
+                                        </div>
+                                        <div *ngIf="child.children?.length">
+                                          <span>Chilren:</span>
+                                          <ul>
+                                          </ul>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </li>
+
+                                <li *ngFor="let child of child.children">
+                                  <strong>{{ child.name }}</strong>
+                                </li>
+
+                              </ul>
+                            </div>
+                          </li>
+
+                        </ul>
+                      </div>
+                    </li>
+
+                  </ul>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
 </div>

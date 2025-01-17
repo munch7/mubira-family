@@ -127,47 +127,26 @@ header p {
 .generation-4 .person { background-color: #9C27B0; }
 .generation-5 .person { background-color: #E91E63; }
 
-/* body {
-  font-family: Arial, sans-serif;
-}
 
-.family-tree {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.generation {
-  list-style: none;
-  padding-left: 20px;
-  display: none; 
-}
-
-.generation.active {
-  display: block; 
-}
-
-.generation > li {
-  margin-bottom: 10px;
-}
-
-.dropdown-toggle {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
+/* src/app/tree/tree.component.css */
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0;
   text-align: left;
-  width: 100%;
+}
+
+.dropdown-btn {
+  padding: 10px;
+  border: none;
   cursor: pointer;
-  border-radius: 5px;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
-.dropdown-toggle:focus {
-  outline: 2px solid #0056b3;
+.dropdown-btn:hover {
+  background-color: #2980b9;
+  color: white;
 }
-
-@media (max-width: 768px) {
-  .dropdown-toggle {
-    font-size: 14px;
-    padding: 10px;
-  }
-} */
