@@ -8,238 +8,179 @@ import { Member } from './member.model';
 export class TreeService {
   getTree(): Member {
     return {
-
-      name: 'Mubira',
+      name: 'Michael Njenga (Mubira)',
+      generation: 1, // Root generation
       spouse: [
-        { name: '',
-          children: [
-            { name: 'Kanja Mubira' },
-            { name: "Peter Kang'atui Mubira" },
-            { name: 'Mungai Mubira' },
-            { name: 'Kimani Mubira'},
-            { name: 'Michael Ngugi (Kahonoki)'},
-            { name: 'Samuel Kamau',
-              spouse: [
-                { name: 'Penninah Njoki Kamau',
-                  children: [
-                    { name: 'wauci',
-                      children: [
-                        { name: 'Mercy Wathoni' },
-                        { name: 'Waruiru' },
-                        { name: 'Muciru' },
-                        { name: 'Kamau' },
-                        { name: 'Wanjiku' },
-                        { name: 'Gitau' },
-                        { name: 'Ngugi' },
-                      ]
-                    },
-                    { name: 'Francis Mburu Kamau',
-                      spouse: [
-                        { name: 'Njeri',
-                          children: [
-                            { name: 'Brenda Njoki',
-                              children: [
-                                { name: 'Ethan Mburu' }
-                              ]
-                            },
-                            { name: 'Christine Mugure' },
-                            { name: 'Eric Kamau Mburu' },
-                            { name: 'Catherine Wanjiku',
-                              children: [
-                                { name: 'Mburu' }
-                              ]
-                            },
-                          ]
-                        },
-                      ],
-                    },
-                    { name: 'Joyce Wanjiru',
-                      children: [
-                        { name: 'Rose Nduta' },
-                        { name: 'Ann Njoki' },
-                        { name: 'Kamau' },
-                        { name: 'Kamau' },
-                        { name: 'Wanjiku' },
-                      ]
-                    },
-                    { name: 'Esther Mwihaki' },
-                    { name: 'Moses Ngugi Kamau',
-                      spouse: [
-                        { name: 'Roxana Wanjai',
-                          children: [
-                            { name: 'Samuel Kamau Ngugi' },
-                            { name: 'Penninah Njoki',
-                              children: [
-                                { name: 'Ahadi Wanjai' }
-                              ]
-                            },
-                            { name: 'Kenneth Kigathi Ngugi' },
-                            { name: 'Christine Waruga' },
-                            { name: 'Francis Mburu Ngugi' },
-                          ]
-                        }
-                      ]
-                    },
-                    { name: 'Bernice Muthoni',
-                      children: [
-                        { name: 'Christine Wambui' },
-                        { name: 'Fiona Njoki' },
-                      ]
-                    },
-                    { name: 'Rose Wambui',
-                      children: [
-                        { name: 'Ann Njoki' },
-                        { name: 'Elizabeth Wanjiku' },
-                      ]
-                    }
-                  ]
-                },
-                { name: 'Leah Wania Kamau',
-                  children: [
-                    { name: 'Wathoni',
-                      children: [
-                        { name: '' }
-                      ]
-                    },
-                    { name: 'Susan',
-                      children: [
-                        { name: '' }
-                      ]
-                    },
-                    { name: 'Mbaire',
-                      children: [
-                        { name: '' }
-                      ]
-                    },
-                    { name: 'Wairimu',
-                      children: [
-                        { name: '' }
-                      ]
-                    },
-                    { name: 'Charles Gitungo Kamau',
-                      children: [
-                        { name: 'Kamau' },
-                        { name: 'Leah Wania Gitungo' },
-                        { name: 'Kubai' },
-                        { name: 'Njuguna' },
-                        { name: 'Faith Njeri' }
-                      ]
-                    }
-                  ]
-                },
-                { name: 'Serah Wanjiku Kamau',
-                  children: [
-                    { name: 'Kennedy Ngugi Kamau',
-                      spouse: [
-                        { name: '',
-                          children: [
-                            { name: 'Wanjiru' },
-                            { name: 'Nduta' },
-                            { name: 'Wanjiru',
-                              children: [
-                                { name: 'Mophat Ngugi Wanjiru' }
-                              ]
-                            },
-                            { name: 'Wambui' },
-                            { name: 'Samuel Kamau Ngugi' }
-                          ]
-                        }
-                      ]
-                    },
-                    { name: 'George Mbugu Kamu',
-                      spouse: [
-                        { name: '',
-                          children: [
-                            { name: 'Carol Wanjiru' },
-                            { name: 'Wambui' },
-                            { name: 'Samuel Kamau Mbugua' },
-                            { name: 'Wanjiku' }
-                          ]
-                        }
-                      ]
-                    },
-                    { name: 'Emily Wambui Kamau' },
-                    { name: 'Charles Gitungo (Manager)',
-                      spouse: [
-                        { name: '',
-                          children: [
-                            { name: 'Wanjiru' },
-                            { name: 'Kamau Gitungo' },
-                            { name: 'Muthoni' },
-                            { name: 'Wanjiku' }
-                          ]
-                        }
-                      ]
-                    },
-                    { name: 'Njeri',
-                      children: [
-                        { 
-                          name: 'Susan Wanjiru',
-                          children: [
-                            { name: '' }
-                          ]
-                        }
-                      ]
-                    },
-                    { name: 'Njunge',
-                      spouse: [
-                        { 
-                          name: '',
-                          children: [
-                            { name: '' }
-                          ]
-                        }
-                      ]
-                    },
-                    { name: 'Esther Mbaire' },
-                    { name: 'Maigua',
-                      spouse: [
-                        { 
-                          name: '',
-                          children: [
-                            { name: '' },
-                            { name: '' },
-                          ]
-                        }
-                      ]
-                    },
-                    { name: 'Mathew Njenga Kamau',
-                      spouse: [
-                        { 
-                          name: '',
-                          children: [
-                            { name: 'Kamau Njenga' },
-                            { name: 'Christopher Karani Njenga' }
-                          ]
-                        }
-                      ]
-                    },
-                  ]
-                },
-              ]
-            },
-            { name: 'Gitu Mubira',
-              spouse: [
-                { name: '',
-                  children: [
-                    { name: 'Alice Wangari Gitu',
-                      children: [
-                        { name: 'Louis George Gitu' }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            { name: "Stephen King'ang'i Mubira" },
-            { name: 'Kungu Mubira' },
-            { name: 'Gitungo Mubira' },
-            { name: 'Kaguathi Mubira' }
-          ]
-        }
+        this.createSpouse('first wife', [        
+          this.createChild('Kanja Mubira', 2),
+          this.createChild('Peter Kang\'atui Mubira', 2),
+          this.createChild('Mungai Mubira', 2),
+          this.createChild('Kimani Mubira', 2, [], [
+            this.createSpouse('UNKNOWN', [
+              this.createChild('David Ngugi Kimani', 3, [], [
+                this.createSpouse('UNKOWN', [
+                  this.createChild('Josephine Wanjiku Ngugi', 4)
+                ])
+              ])
+            ])
+          ]),
+          this.createChild('Michael Ngugi (Kahonoki)', 2),
+          this.createChild('Samuel Kamau', 2, [] ,[
+            this.createSpouse('Penninah Njoki Kamau', [
+              this.createChild('wauci', 3, [
+                this.createChild('Mercy Wathoni', 4),
+                this.createChild('Waruiru', 4),
+                this.createChild('Muciru', 4),
+                this.createChild('Kamau', 4),
+                this.createChild('Wanjiku', 4),
+                this.createChild('Gitau', 4),
+                this.createChild('Ngugi', 4)
+              ]),
+              this.createChild('Francis Mburu Kamau', 3, [], [
+                this.createSpouse('Njeri', [
+                  this.createChild('Brenda Njoki', 4, [
+                    this.createChild('Ethan Mburu', 5)
+                  ]),
+                  this.createChild('Christine Mugure', 4),
+                  this.createChild('Eric Kamau Mburu', 4),
+                  this.createChild('Catherine Wanjiku', 4, [
+                    this.createChild('Mburu', 5)
+                  ])
+                ])
+              ]),
+              this.createChild('Joyce Wanjiru', 3, [
+                this.createChild('Rose Nduta', 4),
+                this.createChild('Ann Njoki', 4),
+                this.createChild('Kamau', 4),
+                this.createChild('Kamau', 4),
+                this.createChild('Wanjiku', 4)
+              ]),
+              this.createChild('Esther Mwihaki', 3),
+              this.createChild('Moses Ngugi Kamau', 3, [], [
+                this.createSpouse('Roxana Wanjai', [
+                  this.createChild('Samuel Kamau Ngugi', 4),
+                  this.createChild('Penninah Njoki', 4, [
+                    this.createChild('Ahadi Wanjai', 5)
+                  ]),
+                  this.createChild('Kenneth Kigathi Ngugi', 4),
+                  this.createChild('Christine Waruga', 4),
+                  this.createChild('Francis Mburu Ngugi', 4)
+                ])
+              ]),
+              this.createChild('Bernice Muthoni', 3, [
+                this.createChild('Christine Wambui', 4),
+                this.createChild('Fiona Njoki', 4)
+              ]),
+              this.createChild('Rose Wambui', 3, [
+                this.createChild('Ann Njoki', 4),
+                this.createChild('Elizabeth Wanjiku', 4)
+              ])
+            ]),
+            this.createSpouse('Leah Wania Kamau', [
+              this.createChild('Wathoni',3),
+              this.createChild('Susan',3),
+              this.createChild('Mbaire',3),
+              this.createChild('Wairimu',3),
+              this.createChild('Charles Gitungo Kamau',3 , [], [
+                this.createSpouse('UNKOWN', [
+                  this.createChild('Kamau Gitungo', 4),
+                  this.createChild('Leah Wania', 4),
+                  this.createChild('Kubai Gitungo', 4),
+                  this.createChild('Njuguna Gitungo', 4),
+                  this.createChild('Faith Njeri', 4),
+                ])
+              ]),
+            ]),
+            this.createSpouse('Serah Wanjiku Kamau', [
+              this.createChild('Kennedy Ngugi Kamau', 3, [], [
+                this.createSpouse('UNKNOWN', [
+                  this.createChild('Wanjiru', 4),
+                  this.createChild('Nduta', 4, [
+                    this.createChild('Waithira', 5)
+                  ]),
+                  this.createChild('Wanjiru', 4, [
+                    this.createChild('Mophat Ngugi Wanjiru', 5)
+                  ]),
+                  this.createChild('Wamboi', 4, [
+                    this.createChild('Kennedy Ngugi Wanjiru', 5)
+                  ]),
+                  this.createChild('Samuel Kamau Ngugi', 4)
+                ])
+              ]),
+              this.createChild('George Mbugua Kamau', 3, [], [
+                this.createSpouse('UNKKNOWN', [
+                  this.createChild('Carol Wanjiru', 4),
+                  this.createChild('Wambui', 4),
+                  this.createChild('Samuel Kamau Mbugua', 4),
+                  this.createChild('Wanjiku', 4)
+                ])
+              ]),
+              this.createChild('Emily Wambui Kamau', 3,),
+              this.createChild('Charles Gitungo Kamau (Manager)', 3, [], [
+                this.createSpouse('UNKNOWN', [
+                  this.createChild('Wanjiru', 4),
+                  this.createChild('Kamau Gitungo', 4),
+                  this.createChild('Muthoni', 4),
+                  this.createChild('Wanjiku', 4)
+                ])
+              ]),
+              this.createChild('Njeri', 3, [
+                this.createChild('Susan Wanjiru', 4)
+              ]),
+              this.createChild('Njunge', 3),
+              this.createChild('Esther Mbaire', 3),
+              this.createChild('Maigua', 3),
+              this.createChild('Mathew Njenga Kamau', 3, [], [
+                this.createSpouse('UNKOWN', [
+                  this.createChild('Kamau Njenga', 4),
+                  this.createChild('Christopher Karani Njenga', 4),
+                ])
+              ]),
+            ])
+          ]),
+          this.createChild('George Gitu Mubira', 2, [], [
+            this.createSpouse('UNKNOWN', [
+              this.createChild('Alice Wangari Gitu', 3, [
+                this.createChild('Louis George Gitu', 4)
+              ]),
+              this.createChild('James Ngugi Gitu', 3, [], [
+                this.createSpouse('Edith Nyambura Ngugi', [
+                  this.createChild('George Gitu Ngugi', 4),
+                  this.createChild('Everlyne Nyokabi Ngugi', 4),
+                  this.createChild('Brian Njoroge Ngugi', 4),
+                ])
+              ]),
+              this.createChild('Njoroge Ngugi Gitu', 3)
+            ]),
+          ]),
+          this.createChild('Stephen King\'ang\'i Mubira', 2),
+          this.createChild('Kungu Mubira', 2),
+          this.createChild('Gitungo Mubira', 2),
+          this.createChild('Kaguathi Mubira', 2)
+        ])
       ],
+      children: [],
+      showChildren: false,
+    };
+  }
 
-    } as Member;
-  };
+  // Helper function to create child member objects with optional spouses and children
+  private createChild(name: string, generation: number, children: Member[] = [], spouse: Member[] = []): Member {
+    return {
+      name,
+      generation,
+      children,
+      spouse,
+      showChildren: false,
+    };
+  }
 
+  // Helper function to create spouse member objects
+  private createSpouse(name: string, children: Member[] = []): Member {
+    return {
+      name,
+      children,
+      showChildren: false
+    };
+  }
 }

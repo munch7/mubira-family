@@ -1,0 +1,30 @@
+.tree-node {
+    cursor: pointer;
+    margin-left: 20px;
+    padding: 5px;
+  }
+  
+  .tree-node p {
+    margin-left: 20px;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  button {
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+
+  .tree-node h3:hover {
+    color: #007BFF; /* Highlight the name on hover */
+    text-decoration: underline;
+  }    

@@ -1,1 +1,14 @@
-<p>tree-node works!</p>
+<!-- Tree Node Component (app-tree-node) -->
+<div *ngFor="let member of members">
+    <div class="tree-node" (click)="toggleDetails(member)">
+      <h3>{{ member.name }}</h3>
+      <p *ngIf="member.showDetails">{{ member.details }}</p>  <!-- Display additional details on click -->
+      <button *ngIf="member.children" (click)="toggleChildVisibility(member)">
+        {{ member.showChildren ? 'Hide Children' : 'Show Children' }}
+      </button>
+      <div *ngIf="member.showChildren">
+        <app-tree-node [members]="member.children"></app-tree-node>  <!-- Recursively display children -->
+      </div>
+    </div>
+ </div>
+  

@@ -20,6 +20,8 @@ import { TreeNodeComponent } from './tree-node/tree-node.component';
 
 export class TreeComponent implements OnInit{
   familyTree: Member[] = [];
+  member: Member[] = [];
+  generation: number = 1;
 
   constructor(private familyTreeService: TreeService) {}
 
@@ -29,5 +31,8 @@ export class TreeComponent implements OnInit{
       console.log('Members:', this.familyTree);
   }
   
-
+  toggleNode(member: Member): void {
+    member.showChildren = !member.showChildren;
+  }
+  
 }

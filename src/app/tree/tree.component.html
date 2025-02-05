@@ -28,140 +28,49 @@
     <hr>
 
     <div class="family-tree">
+
       <ul>
-
         <li *ngFor="let member of familyTree">
-          <strong>{{ member.name }}</strong>
-          <!-- mubira -->
-          <div *ngIf="member.spouse?.length">
-            <span>Spouse(s):</span>
-            <ul>
-
-              <li *ngFor="let spouse of member.spouse">
-                <strong>{{ spouse.name }}</strong>
-                <!-- first wife -->
-                <div *ngIf="spouse.children?.length">
-                  <span>Children:</span>
-                  <ul>
-
-                    <li *ngFor="let child of spouse.children">
-                      <strong>{{ child.name }}</strong>
-                      <!-- kamau -->
-                      <div *ngIf="child.spouse?.length">
-                        <span>Spouse:</span>
-                        <ul>
-                          
-                          <li *ngFor="let spouse of child.spouse">
-                            <strong>{{ spouse.name }}</strong>
-                            <!-- njoki -->
-                            <div *ngIf="spouse.children?.length">
-                              <span>Children:</span>
-                              <ul>
-
-                                <li *ngFor="let child of spouse.children">
-                                  <strong>{{ child.name }}</strong>
-                                  <!-- wauci -->
-                                  <div *ngIf="child.spouse?.length">
-                                    <span>spouse:</span>
-                                    <ul>
-
-                                      <li *ngFor="let spouse of child.spouse">
-                                        <strong>{{ spouse.name }}</strong>
-                                        <!-- wanjai -->
-                                        <div *ngIf="spouse.children?.length">
-                                          <span>Children:</span>
-                                          <ul>
-
-                                            <li *ngFor="let child of spouse.children">
-                                              <strong>{{ child.name }}</strong>
-                                              <!-- njoki -->
-                                              <div *ngIf="child.spouse?.length">
-                                                <span>spouse:</span>
-                                                <ul>
-
-                                                  <li *ngFor="let spouse of child.spouse">
-                                                    <strong>{{ spouse.name }}</strong>
-                                                    <div *ngIf="spouse.children?.length">
-                                                      <span>Children:</span>
-                                                      <ul>
-
-                                                        <li *ngFor="let child of spouse.children">
-                                                          <strong>{{ child.name }}</strong>
-                                                        </li>
-
-                                                      </ul>
-                                                    </div>
-                                                  </li>
-
-                                                </ul>
-                                              </div>
-                                              <div *ngIf="child.children?.length">
-                                                <span>Chilren:</span>
-                                                <ul>
-                
-                                                  <li *ngFor="let child of child.children">
-                                                    <strong>{{ child.name }}</strong>
-                                                    <div *ngIf="spouse.children?.length">
-                                                      <span>Children:</span>
-                                                    </div>
-                                                    <div *ngIf="child.children?.length">
-                                                      <span>Chilren:</span>
-                                                      <ul>
-                                                      </ul>
-                                                    </div>
-                                                  </li>
-                                                </ul>
-                                              </div>
-                                            </li>
-
-                                          </ul>
-                                        </div>
-                                      </li>
-
-                                    </ul>
-                                  </div>
-                                  <div *ngIf="child.children?.length">
-                                    <span>Chilren:</span>
-                                    <ul>
-
-                                      <li *ngFor="let child of child.children">
-                                        <strong>{{ child.name }}</strong>
-                                        <!-- wathoni -->
-                                        <div *ngIf="spouse.children?.length">
-                                          <span>Children:</span>
-                                        </div>
-                                        <div *ngIf="child.children?.length">
-                                          <span>Chilren:</span>
-                                          <ul>
-                                          </ul>
-                                        </div>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </li>
-
-                                <li *ngFor="let child of child.children">
-                                  <strong>{{ child.name }}</strong>
-                                </li>
-
-                              </ul>
-                            </div>
-                          </li>
-
-                        </ul>
-                      </div>
+          <strong class="gen-1" (click)="toggleNode(member)">
+            {{ member.name }} <span>{{ member.showChildren ? '▼' : '▶' }}</span>
+          </strong>
+      
+          <ul *ngIf="member.showChildren && member.spouse?.length">
+            <li *ngFor="let spouse of member.spouse">
+              <strong class="gen-1">Wife: {{ spouse.name }}</strong>
+      
+              <ul *ngIf="spouse.children?.length">
+                <li *ngFor="let child of spouse.children">
+                  <strong class="gen-2" (click)="toggleNode(child)">
+                    {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
+                  </strong>
+      
+                  <ul *ngIf="child.showChildren && child.spouse?.length">
+                    <li *ngFor="let spouse of child.spouse">
+                      <strong class="gen-2">Wife: {{ spouse.name }}</strong>
+      
+                      <ul *ngIf="spouse.children?.length">
+                        <li *ngFor="let child of spouse.children">
+                          <strong class="gen-3" (click)="toggleNode(child)">
+                            {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
+                          </strong>
+      
+                          <ul *ngIf="child.showChildren && child.children?.length">
+                            <li *ngFor="let grandchild of child.children">
+                              <strong class="gen-4">{{ grandchild.name }}</strong>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
                     </li>
-
                   </ul>
-                </div>
-              </li>
-
-            </ul>
-          </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </li>
-
       </ul>
+      
     </div>
-
   </div>
 </div>
