@@ -4,4 +4,5 @@ export interface Member {
   spouse?: Member[];
   children?: Member[];
   showChildren?: boolean;
+  showSpouse?: boolean;
 }

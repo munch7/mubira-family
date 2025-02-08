@@ -161,6 +161,7 @@ export class TreeService {
       ],
       children: [],
       showChildren: false,
+      showSpouse: false,
     };
   }
 
@@ -172,6 +173,7 @@ export class TreeService {
       children,
       spouse,
       showChildren: false,
+      showSpouse: false,
     };
   }
 
@@ -180,7 +182,8 @@ export class TreeService {
     return {
       name,
       children,
-      showChildren: false
+      showChildren: false,
+      showSpouse: false
     };
   }
 }

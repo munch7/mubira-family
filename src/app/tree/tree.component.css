@@ -1,6 +1,6 @@
 .container {
   font-family: Arial, sans-serif;
-  background-color: #f3f4f6;
+  background-color: rgb(243, 244, 246, 0.7);
   color: #333;
   margin: 0;
   padding: 20px;
@@ -45,7 +45,7 @@ ul{
 }
 
 .gen-1 { color: #4CAF50; }
-.gen-2 { color: #FF9800; }
+.gen-2 { color: #7c4b00; }
 .gen-3 { color: #2196F3; }
 .gen-4 { color: #9C27B0; }
 .gen-5 { color: #E91E63; }

@@ -34,30 +34,53 @@
           <strong class="gen-1" (click)="toggleNode(member)">
             {{ member.name }} <span>{{ member.showChildren ? '▼' : '▶' }}</span>
           </strong>
-      
+
           <ul *ngIf="member.showChildren && member.spouse?.length">
             <li *ngFor="let spouse of member.spouse">
               <strong class="gen-1">Wife: {{ spouse.name }}</strong>
-      
+
               <ul *ngIf="spouse.children?.length">
                 <li *ngFor="let child of spouse.children">
                   <strong class="gen-2" (click)="toggleNode(child)">
                     {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
                   </strong>
-      
+
                   <ul *ngIf="child.showChildren && child.spouse?.length">
                     <li *ngFor="let spouse of child.spouse">
                       <strong class="gen-2">Wife: {{ spouse.name }}</strong>
-      
+
                       <ul *ngIf="spouse.children?.length">
                         <li *ngFor="let child of spouse.children">
                           <strong class="gen-3" (click)="toggleNode(child)">
                             {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
                           </strong>
-      
+
                           <ul *ngIf="child.showChildren && child.children?.length">
-                            <li *ngFor="let grandchild of child.children">
-                              <strong class="gen-4">{{ grandchild.name }}</strong>
+                            <li *ngFor="let child of child.children">
+                              <strong class="gen-4" (click)="toggleNode(child)">
+                                {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
+                              </strong>
+                            </li>
+                          </ul>
+                          <ul *ngIf="child.showChildren && child.spouse?.length">
+                            <li *ngFor="let spouse of child.spouse">
+                              <strong class="gen-3">Wife: {{ spouse.name }}</strong>
+                              
+                              <ul *ngIf="spouse.children?.length">
+                                <li *ngFor="let child of spouse.children">
+                                  <strong class="gen-4" (click)="toggleNode(child)">
+                                    {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
+                                  </strong>
+                                  
+                                  <ul *ngIf="child.showChildren && child.children?.length">
+                                    <li *ngFor="let child of child.children">
+                                      <strong class="gen-5" (click)="toggleNode(child)">
+                                        {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
+                                      </strong>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
                             </li>
                           </ul>
                         </li>
@@ -70,7 +93,6 @@
           </ul>
         </li>
       </ul>
-      
     </div>
   </div>
 </div>

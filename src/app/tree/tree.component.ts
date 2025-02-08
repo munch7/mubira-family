@@ -33,6 +33,13 @@ export class TreeComponent implements OnInit{
   
   toggleNode(member: Member): void {
     member.showChildren = !member.showChildren;
+    member.showSpouse = !member.showSpouse; 
+    if (member.children) {
+      member.children.forEach(child => child.showChildren = false); // Collapse all children initially if toggling parent
+    }
+    if (member.spouse) {
+      member.spouse.forEach(child => child.showSpouse = false); // Collapse all spouse initially if toggling parent
+    }
   }
   
 }
