@@ -8,13 +8,33 @@ import { Member } from './member.model';
 export class TreeService {
   getTree(): Member {
     return {
-      name: 'Michael Njenga (Mubira)',
+      name: 'MUBIRA',
       generation: 1, // Root generation
       spouse: [
-        this.createSpouse('first wife', [        
-          this.createChild('Kanja Mubira', 2),
+        this.createSpouse('Njoki wa Ragui',[
+          this.createChild('Gitungo', 2, [], [
+            this.createSpouse('Wamaitha', [
+              this.createChild('Michael Ngugi (Kahonoki)', 2),
+              this.createChild('John Mbugua', 3)
+            ])
+          ]),
+          this.createChild('Wahu', 2, []),
+          this.createChild('Kanyiha', 2, [])
+        ]),
+        this.createSpouse('Karungari or Mwihaki', [        
           this.createChild('Peter Kang\'atui Mubira', 2),
+          // this.createChild('Stephen King\'ang\'i Mubira', 2),
+        ]),
+        this.createSpouse('Wanjiru wa Kanja',[
+          this.createChild('Gitungo Mubira', 2),
+          this.createChild('Kanja Mubira', 2),
+        ]),
+        this.createSpouse('Nyenjeri or Mugure',[
+          this.createChild('Kagwathi Mubira', 2),
           this.createChild('Mungai Mubira', 2),
+        ]),
+        this.createSpouse('Gaceru',[
+          this.createChild('Kungu Mubira', 2),
           this.createChild('Kimani Mubira', 2, [], [
             this.createSpouse('UNKNOWN', [
               this.createChild('David Ngugi Kimani', 3, [], [
@@ -24,7 +44,9 @@ export class TreeService {
               ])
             ])
           ]),
-          this.createChild('Michael Ngugi (Kahonoki)', 2),
+        ]),
+        this.createSpouse('Githua or Wauci',[
+          this.createChild('Maigua', 2),
           this.createChild('Samuel Kamau', 2, [] ,[
             this.createSpouse('Penninah Njoki Kamau', [
               this.createChild('wauci', 3, [
@@ -138,6 +160,9 @@ export class TreeService {
               ]),
             ])
           ]),
+        ]),
+        this.createSpouse("Njoki wa King'ang'i",[
+          this.createChild('Kingangi', 2),
           this.createChild('George Gitu Mubira', 2, [], [
             this.createSpouse('UNKNOWN', [
               this.createChild('Alice Wangari Gitu', 3, [
@@ -153,11 +178,8 @@ export class TreeService {
               this.createChild('Njoroge Ngugi Gitu', 3)
             ]),
           ]),
-          this.createChild('Stephen King\'ang\'i Mubira', 2),
-          this.createChild('Kungu Mubira', 2),
-          this.createChild('Gitungo Mubira', 2),
-          this.createChild('Kaguathi Mubira', 2)
-        ])
+        ]),
+        this.createSpouse('Wabiri',[]),
       ],
       children: [],
       showChildren: false,
