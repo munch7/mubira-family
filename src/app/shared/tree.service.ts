@@ -14,8 +14,17 @@ export class TreeService {
         this.createSpouse('Njoki wa Ragui',[
           this.createChild('Gitungo', 2, [], [
             this.createSpouse('Wamaitha', [
-              this.createChild('Michael Ngugi (Kahonoki)', 2),
-              this.createChild('John Mbugua', 3)
+              this.createChild('Michael Ngugi (Kahonoki)', 2, [], [
+                this.createSpouse('Waithera', []),
+                this.createSpouse('Wambui', [
+                  this.createChild('David Njenga Ngugi', 3, [], [
+                    this.createSpouse('Unkown', [
+                      this.createChild('Ian Mwaura Njenga', 4, [])
+                    ])
+                  ])
+                ])
+              ]),
+              this.createChild('John Mbugua', 3, [], [])
             ])
           ]),
           this.createChild('Wahu', 2, []),

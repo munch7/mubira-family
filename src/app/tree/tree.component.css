@@ -44,11 +44,11 @@ ul{
   /* margin: 10px; */
 }
 
-.gen-1 { color: #4CAF50; font-size: x-large;}
+.gen-1 { color: #000000; font-size: x-large;}
 .gen-2 { color: #7c4b00; }
-.gen-3 { color: #2196F3; }
-.gen-4 { color: #9C27B0; }
-.gen-5 { color: #E91E63; }
+.gen-3 { color: #1d73b9; }
+.gen-4 { color: #9437a5; }
+.gen-5 { color: #ad194a; }
 
 strong{
   padding: 6px;
