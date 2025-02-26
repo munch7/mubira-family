@@ -8,23 +8,89 @@ import { Member } from './member.model';
 export class TreeService {
   getTree(): Member {
     return {
-      name: 'MUBIRA',
+      name: 'MUBIRA GITUNGO',
       generation: 1, // Root generation
       spouse: [
         this.createSpouse('Njoki wa Ragui',[
-          this.createChild('Gitungo', 2, [], [
+          this.createChild('Gitungo Mubira', 2, [], [
             this.createSpouse('Wamaitha', [
+              this.createChild('Mwembu', 2),
+              this.createChild('Mwihaki', 2),
+              this.createChild('Nyakanini', 2),
+              this.createChild('Mbugua', 2),
               this.createChild('Michael Ngugi (Kahonoki)', 2, [], [
-                this.createSpouse('Waithera', []),
-                this.createSpouse('Wambui', [
+                this.createSpouse('Waithira', [
+                  this.createChild('Wamaitha', 3),
+                  this.createChild('Karabi', 3),
+                  this.createChild('Njoki', 3),
+                  this.createChild('Waitiri', 3),
+                  this.createChild('Kang"ori', 3),
+                  this.createChild('Kamondia', 3),
+                ]),
+                this.createSpouse('Rachael Wambui', [
+                  this.createChild('Wamaitha', 3),
+                  this.createChild('Njuhi', 3),
+                  this.createChild('Njoki', 3),
+                  this.createChild('Watiri', 3),
+                  this.createChild('Gitungo', 3),
+                  this.createChild('Mbugua', 3),
                   this.createChild('David Njenga Ngugi', 3, [], [
                     this.createSpouse('Unkown', [
-                      this.createChild('Ian Mwaura Njenga', 4, [])
+                      this.createChild('Michaelle Ngugi Njenga', 4, []),
+                      this.createChild('Ian Mwaura Njenga', 4, []),
                     ])
                   ])
                 ])
               ]),
-              this.createChild('John Mbugua', 3, [], [])
+              this.createChild('John Mbugua Gitungo', 2, [], [
+                this.createSpouse('Eunice Wanjiku', [
+                  this.createChild('Willie Njoroge Mbugua', 3, [], [
+                    this.createSpouse('Gladwell Njeri Njoroge', [
+                      this.createChild('Eunice Wanjiku', 4)
+                    ])
+                  ]),
+                  this.createChild('Gladys Njoki Chege', 3, [], [
+                    this.createChild('John Mbugua', 4),
+                    this.createChild('Stanley Nguri', 4),
+                    this.createChild('Grace Wanjiku', 4),
+                    this.createChild('Eunice  Gaciku', 4),
+                    this.createChild('John Kimani', 4),
+                    this.createChild('Moses Gitungo', 4),
+                    this.createChild('Serah Njeri', 4),
+                    this.createChild('Esther Wamaitha', 4)
+                  ]),
+                  this.createChild('George Ngugi Mbugua', 3, [], [
+                    this.createSpouse('Jane Muciru Ngugi', [
+                      this.createChild('Eunice Wanjiku', 4),
+                      this.createChild('Mary Wamaitha', 4),
+                      this.createChild('Mercy Wangui', 4),
+                      this.createChild('John Mbugua', 4)
+                    ])
+                  ]),
+                  this.createChild('Esther Wamaitha Njau', 3, [
+                    this.createChild('Eunice Wanjiku', 4),
+                    this.createChild('Serah Wanjiku', 4),
+                    this.createChild("David Wang'ondu", 4),
+                    this.createChild('John Mbugua', 4),
+                    this.createChild('Peninnah Wanja', 4),
+                    this.createChild('Jedida Njeri', 4),
+                  ]),
+                  this.createChild('James Gitau Mbugua', 3, [], [
+                    this.createSpouse('Janet Waithira Gitau', [
+                      this.createChild('Wambui', 4),
+                      this.createChild('Wanjiku', 4)
+                    ])
+                  ]),
+                  this.createChild('Moses Gitungo Mbugua', 3, [], [
+                    this.createSpouse('Rose Wambui Gitungo', [
+                      this.createChild('John Mbugua', 4),
+                      this.createChild('Joyce Wanjiku', 4),
+                      this.createChild('George Muigai', 4),
+                      this.createChild('Jerusha Njeri', 4)
+                    ])
+                  ]),
+                ])
+              ]),
             ])
           ]),
           this.createChild('Wahu', 2, []),
@@ -42,8 +108,17 @@ export class TreeService {
           this.createChild('Kagwathi Mubira', 2),
           this.createChild('Mungai Mubira', 2),
         ]),
-        this.createSpouse('Gaceru',[
-          this.createChild('Kungu Mubira', 2),
+        this.createSpouse('Gaceru Mubira',[
+          this.createChild('Kungu Mubira', 2, [], [
+            this.createSpouse('Leah Nyagaki', [
+              this.createChild('', 3),
+              this.createChild('', 3),
+              this.createChild('', 3),
+              this.createChild('', 3),
+              this.createChild('', 3),
+              this.createChild('', 3),
+            ])
+          ]),
           this.createChild('Kimani Mubira', 2, [], [
             this.createSpouse('UNKNOWN', [
               this.createChild('David Ngugi Kimani', 3, [], [
@@ -53,6 +128,7 @@ export class TreeService {
               ])
             ])
           ]),
+          this.createChild('Mwihaki Mubira', 2)
         ]),
         this.createSpouse('Githua or Wauci',[
           this.createChild('Maigua', 2),
@@ -174,14 +250,54 @@ export class TreeService {
           this.createChild('Kingangi', 2),
           this.createChild('George Gitu Mubira', 2, [], [
             this.createSpouse('UNKNOWN', [
-              this.createChild('Alice Wangari Gitu', 3, [
-                this.createChild('Louis George Gitu', 4)
+              this.createChild('Jane Mwihaki Nduati', 3, [
+                this.createChild('Nduati Gitau', 4),
+                this.createChild('Waitherero Gitau', 4)
+              ]),
+              this.createChild("John King'ang'i Gitu", 3, [], [
+                this.createSpouse("Beth Wanjiru King'ang'i", [
+                  this.createChild("George Gitu King'ang'i", 4),
+                  this.createChild("Maryanne Nyokabi King'ang'i", 4)
+                ]),
+              ]),
+              this.createChild("Peter Kang'ata Gitu", 3),
+              this.createChild('Joys Wanjiru De Graaf', 3, [
+                this.createChild('Ivonne Eleonor Nyokabi De Graaf', 4),
+                this.createChild('Mitchelle Caroline Njoki De Graaf', 4)
+              ]),
+              this.createChild('Geoffrey Gitungo Gitu', 3, [], [
+                this.createSpouse('Grace Wagio Gitungo', [
+                  this.createChild('George Gitu Gitungo', 4),
+                  this.createChild('Esther Nyokabi Gitungo', 4)
+                ])
+              ]),
+              this.createChild('Frank Bob Muigai Gitu', 3, [
+                this.createChild('Esther Nyokabi Muigai', 4),
+                this.createChild('Antony George Gitu Muigai', 4),
+                this.createChild('Kevin Jeremiah Kinyanjui Muigai', 4)
               ]),
               this.createChild('James Ngugi Gitu', 3, [], [
                 this.createSpouse('Edith Nyambura Ngugi', [
                   this.createChild('George Gitu Ngugi', 4),
                   this.createChild('Everlyne Nyokabi Ngugi', 4),
                   this.createChild('Brian Njoroge Ngugi', 4),
+                ])
+              ]),
+              this.createChild('Loise Nyokabi Kimani', 3, [
+                this.createChild('Antony Kibunja', 4),
+                this.createChild('Leonard George Gitu', 4)
+              ]),
+              this.createChild('Alice Wangari Gitu', 3, [
+                this.createChild('Louis George Gitu', 4)
+              ]),
+              this.createChild('Judy Muthoni Muchina', 3, [
+                this.createChild('Martin Mugo Mucina', 4)
+              ]),
+              this.createChild('Grace Njeri Gitau', 3),
+              this.createChild('Kenneth Kiarie Gitau', 3, [], [
+                this.createSpouse('Jane Njeri Kiarie', [
+                  this.createChild('Charlene Nyokabi Kiarie', 4),
+                  this.createChild('George Gitu Kiarie', 4)
                 ])
               ]),
               this.createChild('Njoroge Ngugi Gitu', 3)
