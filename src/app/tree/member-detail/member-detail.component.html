@@ -1,0 +1,62 @@
+<div class="modal-overlay" (click)="close.emit()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+            <h2>{{ member.name }}</h2>
+            <button class="close-btn" (click)="close.emit()">&times;</button>
+        </header>
+
+        <div class="member-info">
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Email</label>
+                    <span>{{ member.email || 'Not provided' }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Phone</label>
+                    <span>{{ member.phone || 'Not provided' }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Occupation</label>
+                    <span>{{ member.occupation || 'Not provided' }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Residence</label>
+                    <span>{{ member.residence || 'Not provided' }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Birth Date</label>
+                    <span>{{ member.birthDate ? (member.birthDate | date:'mediumDate') : 'Not provided' }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Gender</label>
+                    <span>{{ member.gender || 'Not specified' }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Relationship Status</label>
+                    <span>{{ member.relationshipStatus || 'Not specified' }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Generation</label>
+                    <span>{{ member.generation || 'Unknown' }}</span>
+                </div>
+            </div>
+
+            <div class="info-item full-width" *ngIf="member.bio">
+                <label>Bio</label>
+                <p>{{ member.bio }}</p>
+            </div>
+
+            <div class="actions">
+                <div class="btn-group">
+                    <button class="btn-edit" (click)="edit.emit(member)">Edit Info</button>
+                    <button class="btn-secondary" (click)="addChild.emit(member)">
+                        <i class="fa fa-plus"></i> Add Child
+                    </button>
+                    <button class="btn-secondary" (click)="addSpouse.emit(member)">
+                        <i class="fa fa-plus"></i> Add Spouse
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

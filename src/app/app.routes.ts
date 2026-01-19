@@ -1,17 +1,21 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from "./home/home.component";
-import { AboutComponent } from "./about/about.component";
-import { TreeComponent } from './tree/tree.component';
-import { SocialsComponent } from './socials/socials.component';
-import { GeneralComponent} from "./socials/general/general.component";
-import { CareersComponent } from './careers/careers.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent },
-    { path: 'about', component: AboutComponent },
-    { path: 'socials', component: SocialsComponent },
-    { path: 'tree', component: TreeComponent },
-    { path: 'general', component: GeneralComponent },
-    { path: 'careers', component: CareersComponent }
+    {
+        path: 'home',
+        loadComponent: () => import('./home/home.component').then(m => m.HomeComponent)
+    },
+    {
+        path: 'about',
+        loadComponent: () => import('./about/about.component').then(m => m.AboutComponent)
+    },
+    {
+        path: 'tree',
+        loadComponent: () => import('./tree/tree.component').then(m => m.TreeComponent)
+    },
+    {
+        path: 'careers',
+        loadComponent: () => import('./careers/careers.component').then(m => m.CareersComponent)
+    }
 ];

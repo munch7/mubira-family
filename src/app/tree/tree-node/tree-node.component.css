@@ -1,30 +1,439 @@
-.tree-node {
-    cursor: pointer;
-    margin-left: 20px;
-    padding: 5px;
-  }
-  
-  .tree-node p {
-    margin-left: 20px;
-    color: #666;
-    font-size: 0.9rem;
-  }
-  
-  button {
-    margin-top: 10px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
+/* Improved Tree Styling with Responsive Fonts and Enhanced View Button */
+
+.tree-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tree-item {
+  margin: 10px 0;
+}
+
+/* Member Card - Generation-based colors */
+.member-card {
+  background: white;
+  border-radius: 12px;
+  border: 3px solid;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Generation 1 - Royal Purple */
+.member-card[data-generation="1"] {
+  border-color: #7c3aed;
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+}
+
+.member-card[data-generation="1"]:hover {
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Generation 2 - Deep Blue */
+.member-card[data-generation="2"] {
+  border-color: #2563eb;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+.member-card[data-generation="2"]:hover {
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Generation 3 - Emerald Green */
+.member-card[data-generation="3"] {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+.member-card[data-generation="3"]:hover {
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Generation 4 - Amber Orange */
+.member-card[data-generation="4"] {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+}
+
+.member-card[data-generation="4"]:hover {
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Generation 5 - Rose Pink */
+.member-card[data-generation="5"] {
+  border-color: #ec4899;
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+}
+
+.member-card[data-generation="5"]:hover {
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+  transform: translateY(-2px);
+}
+
+.member-card.highlighted {
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  transform: scale(1.02);
+}
+
+.member-card.incomplete {
+  opacity: 0.6;
+  border-style: dashed;
+}
+
+/* Member Header */
+.member-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+}
+
+/* Expand Button */
+.expand-btn {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 2px solid currentColor;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+}
+
+.expand-btn:hover {
+  background: currentColor;
+  color: white;
+  transform: scale(1.1);
+}
+
+.expand-btn:active {
+  transform: scale(0.95);
+}
+
+/* Member Info */
+.member-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.member-name-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.member-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Generation Colors for Names */
+.gen-1 {
+  color: #6b21a8;
+}
+
+.gen-2 {
+  color: #1e40af;
+}
+
+.gen-3 {
+  color: #047857;
+}
+
+.gen-4 {
+  color: #b45309;
+}
+
+.gen-5 {
+  color: #be185d;
+}
+
+.gen-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Spouse Info */
+.spouse-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9375rem;
+  color: #000000;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.spouse-info i {
+  color: #ec4899;
+  font-size: 0.875rem;
+}
+
+/* Enhanced Info Button */
+.btn-info {
+  flex-shrink: 0;
+  min-width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-info:hover {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(99, 102, 241, 0.3);
+}
+
+.btn-info:active {
+  transform: translateY(0);
+}
+
+.btn-info i {
+  font-size: 1.125rem;
+}
+
+/* Children Wrapper */
+.children-wrapper {
+  margin-top: 12px;
+  margin-left: 24px;
+  padding-left: 20px;
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Spouse Sections */
+.spouse-groups {
+  margin-top: 12px;
+}
+
+.spouse-section {
+  margin-bottom: 16px;
+}
+
+.spouse-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-radius: 10px;
+  border-left: 4px solid #f87171;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #991b1b;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.spouse-label i {
+  color: #ef4444;
+  font-size: 1rem;
+}
+
+.spouse-children-list {
+  margin-left: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .member-name {
+    font-size: 1.0625rem;
   }
 
-  .tree-node h3:hover {
-    color: #007BFF; /* Highlight the name on hover */
-    text-decoration: underline;
-  }    
+  .spouse-info {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .member-header {
+    padding: 12px 14px;
+  }
+
+  .member-name {
+    font-size: 1rem;
+  }
+
+  .gen-label {
+    font-size: 0.6875rem;
+    padding: 3px 10px;
+  }
+
+  .spouse-info {
+    font-size: 0.8125rem;
+  }
+
+  .expand-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .btn-info {
+    min-width: 48px;
+    height: 48px;
+    padding: 0 10px;
+  }
+
+  .children-wrapper {
+    margin-left: 16px;
+    padding-left: 16px;
+  }
+
+  .spouse-label {
+    font-size: 0.875rem;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .member-card {
+    border-radius: 10px;
+    border-width: 2px;
+  }
+
+  .member-header {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .member-name {
+    font-size: 0.9375rem;
+  }
+
+  .gen-label {
+    font-size: 0.625rem;
+    padding: 2px 8px;
+  }
+
+  .spouse-info {
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+
+  .expand-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 0.75rem;
+  }
+
+  .btn-info {
+    min-width: 44px;
+    height: 44px;
+    font-size: 0.8125rem;
+  }
+
+  .btn-info i {
+    font-size: 1rem;
+  }
+
+  .children-wrapper {
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left-width: 2px;
+  }
+
+  .spouse-label {
+    font-size: 0.8125rem;
+    padding: 8px 10px;
+  }
+}
+
+/* High Resolution (4K+) */
+@media (min-width: 2560px) {
+  .member-name {
+    font-size: 1.25rem;
+  }
+
+  .gen-label {
+    font-size: 0.875rem;
+    padding: 5px 14px;
+  }
+
+  .spouse-info {
+    font-size: 1.0625rem;
+  }
+
+  .expand-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+  }
+
+  .btn-info {
+    min-width: 52px;
+    height: 52px;
+    font-size: 1rem;
+  }
+
+  .spouse-label {
+    font-size: 1.0625rem;
+    padding: 12px 16px;
+  }
+}
+
+/* Hidden */
+.hidden {
+  display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tree-item {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Print Styles */
+@media print {
+
+  .expand-btn,
+  .btn-info {
+    display: none;
+  }
+
+  .member-card {
+    break-inside: avoid;
+  }
+}

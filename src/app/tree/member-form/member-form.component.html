@@ -1,0 +1,108 @@
+<div class="modal-overlay" (click)="close.emit()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+            <h2>{{ isEdit ? 'Edit' : 'Add' }} Family Member</h2>
+            <button class="close-btn" (click)="close.emit()">&times;</button>
+        </header>
+
+        <form [formGroup]="memberForm" (ngSubmit)="onSubmit()" class="member-form">
+            <div class="form-grid">
+                <div class="form-group full-width autocomplete-container">
+                    <label for="name">Full Name*</label>
+                    <input id="name" type="text" formControlName="name" placeholder="Enter full name"
+                        (focus)="onNameFocus()" (blur)="onNameBlur()" autocomplete="off">
+                    <div class="autocomplete-list" *ngIf="showNameSuggestions && filteredNames.length > 0">
+                        <div *ngFor="let m of filteredNames" (click)="selectNameSuggestion(m.name)"
+                            class="suggestion-item">
+                            {{ m.name }}
+                        </div>
+                    </div>
+                    <span class="warning" *ngIf="isDuplicateName">
+                        <i class="fa fa-exclamation-triangle"></i> This name already exists in the tree.
+                    </span>
+                    <span class="error" *ngIf="memberForm.get('name')?.touched && memberForm.get('name')?.invalid">
+                        Name is required
+                    </span>
+                </div>
+
+                <!-- Relationships first -->
+                <div class="form-group full-width autocomplete-container" *ngIf="!isEdit">
+                    <label for="fatherSearch">Father (Hierarchy Parent)</label>
+                    <input id="fatherSearch" type="text" [value]="fatherSearch" (input)="onFatherSearch($event)"
+                        (focus)="showFatherSuggestions = true" (blur)="onNameBlur()" placeholder="Search for father..."
+                        autocomplete="off">
+                    <div class="autocomplete-list" *ngIf="showFatherSuggestions && filteredFathers.length > 0">
+                        <div *ngFor="let m of filteredFathers" (click)="selectFather(m)" class="suggestion-item">
+                            {{ m.name }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full-width autocomplete-container" *ngIf="!isEdit">
+                    <label for="motherSearch">Mother (Spouse of selection above)</label>
+                    <input id="motherSearch" type="text" [value]="motherSearch" (input)="onMotherSearch($event)"
+                        (focus)="showMotherSuggestions = true" (blur)="onNameBlur()" placeholder="Search for mother..."
+                        autocomplete="off">
+                    <div class="autocomplete-list" *ngIf="showMotherSuggestions && filteredMothers.length > 0">
+                        <div *ngFor="let m of filteredMothers" (click)="selectMother(m)" class="suggestion-item">
+                            {{ m.name }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" formControlName="email" placeholder="example@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input id="phone" type="tel" formControlName="phone" placeholder="+254...">
+                </div>
+
+                <div class="form-group">
+                    <label for="occupation">Occupation</label>
+                    <input id="occupation" type="text" formControlName="occupation" placeholder="e.g. Engineer">
+                </div>
+
+                <div class="form-group">
+                    <label for="residence">Residence</label>
+                    <input id="residence" type="text" formControlName="residence" placeholder="City/Town">
+                </div>
+
+                <div class="form-group">
+                    <label for="birthDate">Birth Date</label>
+                    <input id="birthDate" type="date" formControlName="birthDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" formControlName="gender">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="relationshipStatus">Relationship Status</label>
+                    <select id="relationshipStatus" formControlName="relationshipStatus">
+                        <option value="">Select Status</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" (click)="close.emit()">Cancel</button>
+                <button type="submit" class="btn-submit" [disabled]="memberForm.invalid || isLoading">
+                    {{ isLoading ? 'Saving...' : (isEdit ? 'Update' : 'Save') }} Member
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

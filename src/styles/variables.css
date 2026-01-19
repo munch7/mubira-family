@@ -1,0 +1,31 @@
+:root {
+  /* Colors */
+  --primary-color: #4caf50;
+  --secondary-color: #388e3c;
+  --text-color: #333;
+  --background-color: #f3f4f6;
+  --card-background: #ffffff;
+  
+  /* Typography */
+  --font-family-base: 'Roboto', 'Helvetica Neue', sans-serif;
+  --font-size-base: 16px;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Borders */
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* Generation Colors */
+  /* Generation Colors - Jewel Tones */
+  --gen-1-color: #0d47a1; /* Sapphire */
+  --gen-2-color: #1b5e20; /* Emerald */
+  --gen-3-color: #4a148c; /* Amethyst */
+  --gen-4-color: #00695c; /* Teal */
+  --gen-5-color: #b71c1c; /* Ruby */
+}

@@ -1,14 +1,53 @@
-<!-- Tree Node Component (app-tree-node) -->
-<div *ngFor="let member of members">
-    <div class="tree-node" (click)="toggleDetails(member)">
-      <h3>{{ member.name }}</h3>
-      <p *ngIf="member.showDetails">{{ member.details }}</p>  <!-- Display additional details on click -->
-      <button *ngIf="member.children" (click)="toggleChildVisibility(member)">
-        {{ member.showChildren ? 'Hide Children' : 'Show Children' }}
-      </button>
-      <div *ngIf="member.showChildren">
-        <app-tree-node [members]="member.children"></app-tree-node>  <!-- Recursively display children -->
+<ul class="tree-list">
+  <li *ngFor="let member of members" [class.hidden]="member.isVisible === false" class="tree-item">
+    <div class="member-card" [class.highlighted]="member.isHighlighted" [class.incomplete]="isIncomplete(member)"
+      [attr.data-generation]="member.generation || 1">
+
+      <div class="member-header">
+        <button *ngIf="member.children?.length || member.spouse?.length" class="expand-btn" (click)="toggleNode(member)"
+          [attr.aria-label]="member.showChildren ? 'Collapse' : 'Expand'">
+          <i class="fa" [class.fa-minus]="member.showChildren" [class.fa-plus]="!member.showChildren"></i>
+        </button>
+
+        <div class="member-info">
+          <div class="member-name-section">
+            <strong [class]="'gen-' + (member.generation || 1)" class="member-name">
+              {{ member.name }}
+            </strong>
+            <span class="gen-label">Gen {{ member.generation || 1 }}</span>
+          </div>
+
+          <!-- Spouses displayed inline -->
+          <div class="spouse-info" *ngIf="member.spouse && member.spouse.length > 0">
+            <i class="fa fa-heart"></i>
+            <span *ngFor="let spouse of member.spouse; let last = last">
+              {{ spouse.name }}<span *ngIf="!last">, </span>
+            </span>
+          </div>
+        </div>
+
+        <button class="btn-info" (click)="viewDetails(member)" title="View Details">
+          View more
+        </button>
       </div>
     </div>
- </div>
-  
+
+    <!-- Children Section -->
+    <ng-container *ngIf="member.showChildren">
+      <div class="children-wrapper">
+        <!-- Children grouped by spouse only -->
+        <div *ngIf="member.spouse?.length" class="spouse-groups">
+          <div *ngFor="let spouse of member.spouse" class="spouse-section">
+            <div class="spouse-label" *ngIf="spouse.children?.length">
+              <i class="fa fa-users"></i>
+              <span>Children with {{ spouse.name }}</span>
+            </div>
+            <div *ngIf="spouse.children?.length" class="spouse-children-list">
+              <app-tree-node [members]="spouse.children" (viewMember)="viewDetails($event)"></app-tree-node>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </li>
+</ul>

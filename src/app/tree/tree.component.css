@@ -1,19 +1,82 @@
 .container {
   font-family: Arial, sans-serif;
   background-color: rgb(243, 244, 246, 0.7);
-  color: #333;
+  color: #000000;
   margin: 0;
   padding: 20px;
   border-radius: 20px;
   width: 100%;
 }
 
+/* Scroll wrapper for the tree itself */
+.tree {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  /* Space for scrollbar */
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scrolling on iOS */
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+    border-radius: 12px;
+  }
+}
+
+.tree-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  /* Allow wrapping on small screens */
+}
+
+@media (max-width: 480px) {
+  .tree-controls {
+    flex-direction: column;
+  }
+
+  .tree-controls button,
+  .search-box {
+    width: 100%;
+  }
+}
+
+.tree-controls button {
+  background-color: var(--gen-1-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tree-controls button:hover {
+  background-color: var(--gen-4-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.search-box {
+  flex: 1;
+  padding: 10px;
+  border: 0px;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
 header {
-  background-color: #4caf50;
+  background: linear-gradient(135deg, var(--gen-1-color), var(--gen-4-color));
   color: white;
   padding: 20px;
   text-align: center;
   border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
@@ -21,36 +84,175 @@ header h1 {
   margin: 0;
 }
 
+.tree-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 80vh;
+}
+
+.tree-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tree-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #253244;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.actions button {
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #253244;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+}
+
+.actions button:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.actions .btn-primary {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.actions .btn-primary:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 3rem;
+  max-width: 500px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: white;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.tree-view {
+  background: #f8fafc;
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  overflow-x: auto;
+}
+
 header p {
   font-size: 1rem;
   margin: 5px 0 0;
 }
 
-ul, li{
+ul,
+li {
   text-align: left;
   width: 100%;
   margin: 0px;
   padding: 0px;
 }
 
-li{
+li {
   padding: 4px;
   list-style: none;
 }
 
-ul{
+ul {
   padding: 0px 0px 0px 10px;
   width: 100%;
   /* margin: 10px; */
 }
 
-.gen-1 { color: #000000; font-size: x-large;}
-.gen-2 { color: #7c4b00; }
-.gen-3 { color: #1d73b9; }
-.gen-4 { color: #9437a5; }
-.gen-5 { color: #ad194a; }
+.gen-1 {
+  color: var(--gen-1-color);
+  font-size: x-large;
+}
 
-strong{
+.gen-2 {
+  color: var(--gen-2-color);
+}
+
+.gen-3 {
+  color: var(--gen-3-color);
+}
+
+.gen-4 {
+  color: var(--gen-4-color);
+}
+
+.gen-5 {
+  color: var(--gen-5-color);
+}
+
+strong {
   padding: 6px;
   margin: 8px;
 }

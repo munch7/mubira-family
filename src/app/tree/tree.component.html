@@ -1,111 +1,34 @@
-<div class="container">
-  <header>
-    <h1>Our Family Tree</h1>
-    <p>Discover the generations of our family</p>
-  </header>
-
-  <div class="tree">
-    <p>
-      Embark on a journey through generations as we celebrate our roots and heritage.
-    </p>
-    <p>
-      This interactive family tree allows you to explore the lives and connections of our ancestors, trace the bonds that tie us together, and discover stories that define our family's legacy.
-    </p>
-    <p>
-      Whether you're reconnecting with familiar names or uncovering new ones, this is your gateway to preserving and cherishing our shared history.
-    </p>
-    <p>
-      Dive in and explore the branches of our extraordinary family!
-    </p>
-
-    <hr>
-
-    <div style="color: red">
-      <!-- Placeholder for the search bar -->
-      <input type="text" placeholder="Search family members..." />
-    </div>
-
-    <hr>
-
-    <div class="family-tree">
-
-      <ul>
-        <li *ngFor="let member of familyTree">
-          <strong class="gen-1" (click)="toggleNode(member)">
-            {{ member.name }} <span>{{ member.showChildren ? '▼' : '▶' }}</span>
-          </strong>
-
-          <ul *ngIf="member.showChildren && member.spouse?.length">
-            <li *ngFor="let spouse of member.spouse">
-              <strong class="gen-1">Wife: {{ spouse.name }}</strong>
-
-              <ul *ngIf="spouse.children?.length">
-                <li *ngFor="let child of spouse.children">
-                  <strong class="gen-2" (click)="toggleNode(child)">
-                    {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
-                  </strong>
-
-                  <ul *ngIf="child.showChildren && child.spouse?.length">
-                    <li *ngFor="let spouse of child.spouse">
-                      <strong class="gen-2">Wife: {{ spouse.name }}</strong>
-
-                      <ul *ngIf="spouse.children?.length">
-                        <li *ngFor="let child of spouse.children">
-                          <strong class="gen-3" (click)="toggleNode(child)">
-                            {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
-                          </strong>
-
-                          <ul *ngIf="child.showChildren && child.children?.length">
-                            <li *ngFor="let child of child.children">
-                              <strong class="gen-4" (click)="toggleNode(child)">
-                                {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
-                              </strong>
-                            </li>
-                          </ul>
-                          <ul *ngIf="child.showChildren && child.spouse?.length">
-                            <li *ngFor="let spouse of child.spouse">
-                              <strong class="gen-3">Wife: {{ spouse.name }}</strong>
-                              
-                              <ul *ngIf="spouse.children?.length">
-                                <li *ngFor="let child of spouse.children">
-                                  <strong class="gen-4" (click)="toggleNode(child)">
-                                    {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
-                                  </strong>
-                                  
-                                  <ul *ngIf="child.showChildren && child.spouse?.length">
-                                    <li *ngFor="let spouse of child.spouse">
-                                      <strong class="gen-4">Wife: {{ spouse.name }}</strong>
-                                  
-                                      <ul *ngIf="spouse.children?.length">
-                                        <li *ngFor="let child of spouse.children">
-                                          <strong class="gen-5" (click)="toggleNode(child)">
-                                            {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
-                                          </strong>
-                                        </li>
-                                      </ul>
-                                    </li>
-                                  </ul>
-                                  <ul *ngIf="child.showChildren && child.children?.length">
-                                    <li *ngFor="let child of child.children">
-                                      <strong class="gen-5" (click)="toggleNode(child)">
-                                        {{ child.name }} <span>{{ child.showChildren ? '▼' : '▶' }}</span>
-                                      </strong>
-                                    </li>
-                                  </ul>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
+<div class="tree-container">
+  <div class="tree-header">
+    <h1>Family Tree</h1>
+    <div class="actions">
+      <button class="btn-primary" (click)="onAddMember()">
+        <i class="fa fa-plus"></i> Add Member
+      </button>
+      <button (click)="expandAll()">Expand All</button>
+      <button (click)="collapseAll()">Collapse All</button>
     </div>
   </div>
+
+  <div class="search-box">
+    <input type="text" #searchInput (input)="filterTree(searchInput.value)" placeholder="Search family member...">
+    <i class="fa fa-search search-icon"></i>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading family connections...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="tree-view">
+    <app-tree-node [members]="familyTree" (viewMember)="onViewMember($event)"></app-tree-node>
+  </div>
+  <hr>
+  <app-member-detail *ngIf="showDetailModal && selectedMember" [member]="selectedMember" (close)="closeDetail()"
+    (edit)="onEditMember($event)" (addChild)="onAddChildRef($event)" (addSpouse)="onAddSpouseRef($event)">
+  </app-member-detail>
+
+  <app-member-form *ngIf="showFormModal" [member]="memberToEdit" [initialData]="initialFormData" (close)="closeForm()"
+    (saved)="onSaved()">
+  </app-member-form>
 </div>
