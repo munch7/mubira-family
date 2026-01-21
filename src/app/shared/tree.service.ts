@@ -46,12 +46,6 @@ export class TreeService {
           }
         } else {
           console.warn('🌳 ⚠️ No members from Firestore');
-          // Fallback to local tree if no Firebase data
-          const localTree = this.getTree();
-          if (localTree) {
-            console.log('🌳 Using local tree as fallback');
-            roots.push(localTree);
-          }
         }
 
         console.log('🌳 Final roots array:', roots);
@@ -60,7 +54,7 @@ export class TreeService {
       }),
       catchError(err => {
         console.error('🌳 ❌ Error fetching tree from Firestore', err);
-        return of([this.getTree()]);
+        return of([]);
       }),
       shareReplay(1)
     );
@@ -124,6 +118,14 @@ export class TreeService {
           const childDoc = docMap.get(childId);
           const otherParentId = childDoc?.parentIds?.find(pId => pId !== doc.id);
 
+          // Helper to link parent
+          const linkParent = (parent: Member, c: Member) => {
+            if (!c.parents) c.parents = [];
+            if (!c.parents.some(p => p.id === parent.id)) {
+              c.parents.push(parent);
+            }
+          };
+
           if (otherParentId) {
             const spouseObj = member.spouse?.find(s => s.id === otherParentId);
             if (spouseObj) {
@@ -131,6 +133,8 @@ export class TreeService {
               if (!spouseObj.children.some(c => c.id === childId)) {
                 spouseObj.children.push(child);
               }
+              linkParent(member, child);
+              linkParent(spouseObj, child);
               return;
             }
           }
@@ -138,6 +142,7 @@ export class TreeService {
           if (!member.children?.some(c => c.id === childId)) {
             member.children?.push(child);
           }
+          linkParent(member, child);
         });
       }
     });
@@ -152,7 +157,7 @@ export class TreeService {
       console.log('🌳 ✅ Found root by name:', namedRoot.name);
       const root = memberMap.get(namedRoot.id);
       if (root) {
-        this.initializeMember(root);
+        this.initializeMember(root, 1);
         return root;
       }
     }
@@ -171,7 +176,7 @@ export class TreeService {
         console.log('🌳 ✅ Found root by generation:', rootDoc.name, '(gen', rootDoc.generation, ')');
         const root = memberMap.get(rootDoc.id);
         if (root) {
-          this.initializeMember(root);
+          this.initializeMember(root, 1);
           return root;
         }
       }
@@ -184,7 +189,7 @@ export class TreeService {
       console.log('🌳 ✅ Found root without parents:', memberWithoutParents.name);
       const root = memberMap.get(memberWithoutParents.id);
       if (root) {
-        this.initializeMember(root);
+        this.initializeMember(root, 1);
         return root;
       }
     }
@@ -194,7 +199,7 @@ export class TreeService {
       console.warn('🌳 ⚠️ No clear root found, using first member:', docs[0].name);
       const root = memberMap.get(docs[0].id);
       if (root) {
-        this.initializeMember(root);
+        this.initializeMember(root, 1);
         return root;
       }
     }
@@ -203,10 +208,16 @@ export class TreeService {
     return null;
   }
 
-  private initializeMember(member: Member, visited = new Set<string>()): void {
+  private initializeMember(member: Member, generation: number = 1, visited = new Set<string>()): void {
+    // 1. Break Cycles First
+    this.breakCycles(member);
+
     const identifier = member.id || member.name;
     if (visited.has(identifier)) return;
     visited.add(identifier);
+
+    // Set accurately calculated generation
+    member.generation = generation;
 
     if (member.showChildren === undefined) member.showChildren = false;
     if (member.showSpouse === undefined) member.showSpouse = false;
@@ -214,10 +225,54 @@ export class TreeService {
     if (member.spouse === undefined) member.spouse = [];
 
     if (member.children) {
-      member.children.forEach(child => this.initializeMember(child, visited));
+      member.children.forEach(child => this.initializeMember(child, generation + 1, visited));
     }
     if (member.spouse) {
-      member.spouse.forEach(spouse => this.initializeMember(spouse, visited));
+      member.spouse.forEach(spouse => {
+        // Spouse usually in same generation as the member they are married to
+        this.initializeMember(spouse, generation, visited);
+      });
     }
+  }
+
+  private breakCycles(root: Member): void {
+    const visited = new Set<string>();
+    const stack = new Set<string>();
+
+    const visit = (node: Member) => {
+      const id = node.id || node.name;
+      visited.add(id);
+      stack.add(id);
+
+      if (node.children) {
+        // Filter out children that are already in the current recursion stack (ancestors)
+        node.children = node.children.filter(child => {
+          const childId = child.id || child.name;
+          if (stack.has(childId)) {
+            console.warn(`🌳 Cycle detected: Removing child connection ${node.name} -> ${child.name}`);
+            return false;
+          }
+          return true;
+        });
+
+        node.children.forEach(child => {
+          if (!visited.has(child.id || child.name)) {
+            visit(child);
+          }
+        });
+      }
+
+      if (node.spouse) {
+        node.spouse.forEach(spouse => {
+          if (!visited.has(spouse.id || spouse.name)) {
+            visit(spouse);
+          }
+        });
+      }
+
+      stack.delete(id);
+    };
+
+    visit(root);
   }
 }

@@ -15,7 +15,7 @@ export const routes: Routes = [
         loadComponent: () => import('./tree/tree.component').then(m => m.TreeComponent)
     },
     {
-        path: 'careers',
-        loadComponent: () => import('./careers/careers.component').then(m => m.CareersComponent)
+        path: 'social',
+        loadComponent: () => import('./social/social.component').then(m => m.SocialComponent)
     }
 ];

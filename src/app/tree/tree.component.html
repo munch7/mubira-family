@@ -11,8 +11,25 @@
   </div>
 
   <div class="search-box">
-    <input type="text" #searchInput (input)="filterTree(searchInput.value)" placeholder="Search family member...">
-    <i class="fa fa-search search-icon"></i>
+    <div class="search-input-container">
+      <i class="fa fa-search search-icon"></i>
+      <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Search member name..."
+        class="search-input">
+      <button *ngIf="searchTerm" class="btn-clear-search" (click)="clearSearch()" title="Clear search">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Search Results List -->
+    <div *ngIf="searchResults.length > 0" class="search-results-list">
+      <div *ngFor="let result of searchResults" class="search-result-item" (click)="selectResult(result.member)">
+        <div class="result-name">{{ result.member.name }}</div>
+        <div class="result-details">
+          <span *ngIf="result.parents !== 'None'"><i class="fa fa-users"></i> Parents: {{ result.parents }}</span>
+          <span *ngIf="result.spouses !== 'None'"><i class="fa fa-heart"></i> Spouse: {{ result.spouses }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="isLoading" class="loading-state">

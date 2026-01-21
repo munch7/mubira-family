@@ -27,12 +27,12 @@
 
                 <!-- Relationships first -->
                 <div class="form-group full-width autocomplete-container" *ngIf="!isEdit">
-                    <label for="fatherSearch">Father (Hierarchy Parent)</label>
-                    <input id="fatherSearch" type="text" [value]="fatherSearch" (input)="onFatherSearch($event)"
-                        (focus)="showFatherSuggestions = true" (blur)="onNameBlur()" placeholder="Search for father..."
+                    <label for="memberSearch">member (Hierarchy Parent)</label>
+                    <input id="memberSearch" type="text" [value]="memberSearch" (input)="onmemberSearch($event)"
+                        (focus)="showmemberSuggestions = true" (blur)="onNameBlur()" placeholder="Search for member..."
                         autocomplete="off">
-                    <div class="autocomplete-list" *ngIf="showFatherSuggestions && filteredFathers.length > 0">
-                        <div *ngFor="let m of filteredFathers" (click)="selectFather(m)" class="suggestion-item">
+                    <div class="autocomplete-list" *ngIf="showmemberSuggestions && filteredmembers.length > 0">
+                        <div *ngFor="let m of filteredmembers" (click)="selectmember(m)" class="suggestion-item">
                             {{ m.name }}
                         </div>
                     </div>

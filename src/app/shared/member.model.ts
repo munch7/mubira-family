@@ -15,6 +15,7 @@ export interface Member {
   children?: Member[];
   showChildren?: boolean;
   showSpouse?: boolean;
+  parents?: Member[];
   isHighlighted?: boolean;
   isVisible?: boolean;
 }

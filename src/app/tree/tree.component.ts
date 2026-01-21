@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TreeService } from '../shared/tree.service';
 import { Member } from '../shared/member.model';
 import { TreeNodeComponent } from './tree-node/tree-node.component';
@@ -10,7 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tree',
   standalone: true,
-  imports: [CommonModule, TreeNodeComponent, MemberDetailComponent, MemberFormComponent],
+  imports: [CommonModule, FormsModule, TreeNodeComponent, MemberDetailComponent, MemberFormComponent],
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -18,12 +19,16 @@ import { Subject, takeUntil } from 'rxjs';
 export class TreeComponent implements OnInit, OnDestroy {
   familyTree: Member[] = [];
   isLoading = true;
+  searchTerm: string = '';
 
   selectedMember?: Member;
   showDetailModal = false;
   showFormModal = false;
   memberToEdit?: Member;
   initialFormData?: { parentId?: string; spouseOfId?: string };
+
+  searchResults: { member: Member; parents: string; spouses: string }[] = [];
+  allMembers: Member[] = [];
 
   private destroy$ = new Subject<void>();
 
@@ -38,6 +43,7 @@ export class TreeComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (roots) => {
           this.familyTree = roots;
+          this.allMembers = this.flattenTree(roots);
           this.isLoading = false;
           this.cdr.markForCheck(); // Ensure view updates after async data load
         },
@@ -71,12 +77,41 @@ export class TreeComponent implements OnInit, OnDestroy {
 
     if (!text) {
       this.resetSearch(this.familyTree);
+      this.searchResults = [];
       return;
     }
 
     const lowerText = text.toLowerCase();
+
+    // Detailed search results
+    this.searchResults = this.allMembers
+      .filter(m => m.name.toLowerCase().includes(lowerText))
+      .map(m => ({
+        member: m,
+        parents: m.parents?.map(p => p.name).join(', ') || 'None',
+        spouses: m.spouse?.map(s => s.name).join(', ') || 'None'
+      }));
+
     const visited = new Set<string>();
     this.familyTree.forEach(member => this.filterMember(member, lowerText, visited));
+  }
+
+  private flattenTree(roots: Member[]): Member[] {
+    const flat: Member[] = [];
+    const visited = new Set<string>();
+
+    // Recursive flatten to ensure we catch everything in order if needed
+    const traverse = (m: Member) => {
+      const id = m.id || m.name;
+      if (visited.has(id)) return;
+      visited.add(id);
+      flat.push(m);
+      if (m.children) m.children.forEach(c => traverse(c));
+      if (m.spouse) m.spouse.forEach(s => traverse(s));
+    };
+
+    roots.forEach(r => traverse(r));
+    return flat;
   }
 
   private filterMember(member: Member, text: string, visited: Set<string>): boolean {
@@ -151,6 +186,31 @@ export class TreeComponent implements OnInit, OnDestroy {
     }
   }
 
+  onSearch(): void {
+    if (this.searchTerm.trim().length === 0) {
+      this.searchResults = [];
+      // Optionally reset tree highlights if needed
+      return;
+    }
+
+    const text = this.searchTerm.toLowerCase();
+    this.searchResults = this.allMembers
+      .map(m => {
+        const parents = m.parents?.map(p => p.name).join(', ') || 'None';
+        const spouses = m.spouse?.map(s => s.name).join(', ') || 'None';
+        return { member: m, parents, spouses };
+      })
+      .filter(res => res.member.name.toLowerCase().includes(text));
+
+    this.cdr.markForCheck();
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.searchResults = [];
+    this.cdr.markForCheck();
+  }
+
   onViewMember(member: Member): void {
     this.selectedMember = member;
     this.showDetailModal = true;
@@ -207,9 +267,50 @@ export class TreeComponent implements OnInit, OnDestroy {
     this.familyTreeService.getTree$().subscribe({
       next: (roots) => {
         this.familyTree = roots;
+        this.allMembers = this.flattenTree(roots);
         this.isLoading = false;
         this.cdr.markForCheck();
       }
     });
+  }
+
+  selectResult(member: Member): void {
+    this.searchResults = [];
+    this.expandPathToMember(member);
+
+    // Highlight and scroll
+    member.isHighlighted = true;
+    this.cdr.markForCheck();
+
+    setTimeout(() => {
+      const element = document.getElementById('member-' + (member.id || member.name));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Brief pulse effect via temporary class if needed, or just let highlighted handle it
+        setTimeout(() => {
+          // Keep it highlighted or pulse? Let's stay with highlighted for now
+        }, 2000);
+      }
+    }, 100);
+  }
+
+  private expandPathToMember(member: Member): void {
+    const visited = new Set<string>();
+    const expandUp = (m: Member) => {
+      const id = m.id || m.name;
+      if (visited.has(id)) return;
+      visited.add(id);
+
+      if (m.parents) {
+        m.parents.forEach(parent => {
+          parent.showChildren = true;
+          expandUp(parent);
+        });
+      }
+    };
+
+    expandUp(member);
+    this.cdr.markForCheck();
   }
 }

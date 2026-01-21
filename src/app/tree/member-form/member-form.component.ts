@@ -26,15 +26,15 @@ export class MemberFormComponent implements OnInit {
     selectedParentSpouses: any[] = [];
 
     // Search/Autocomplete State
-    fatherSearch = '';
+    memberSearch = '';
     motherSearch = '';
     nameSearch = '';
     showNameSuggestions = false;
-    showFatherSuggestions = false;
+    showmemberSuggestions = false;
     showMotherSuggestions = false;
 
     filteredNames: any[] = [];
-    filteredFathers: any[] = [];
+    filteredmembers: any[] = [];
     filteredMothers: any[] = [];
 
     isDuplicateName = false;
@@ -56,7 +56,7 @@ export class MemberFormComponent implements OnInit {
             setTimeout(() => {
                 const parent = this.members.find(m => m.id === this.initialData?.parentId);
                 if (parent) {
-                    this.fatherSearch = parent.name;
+                    this.memberSearch = parent.name;
                     this.memberForm.get('parentId')?.setValue(parent.id);
                 }
             }, 500); // Wait for members to load
@@ -72,7 +72,7 @@ export class MemberFormComponent implements OnInit {
                 this.members = data.filter(m => m.id !== this.member?.id);
                 this.members.sort((a, b) => a.name.localeCompare(b.name));
                 this.filteredNames = [...this.members];
-                this.filteredFathers = [...this.members];
+                this.filteredmembers = [...this.members];
             }
         });
     }
@@ -104,24 +104,24 @@ export class MemberFormComponent implements OnInit {
         this.showNameSuggestions = false;
     }
 
-    // Father Autocomplete
-    onFatherSearch(event: any): void {
+    // member Autocomplete
+    onmemberSearch(event: any): void {
         const val = event.target.value;
-        this.fatherSearch = val;
-        this.showFatherSuggestions = true;
+        this.memberSearch = val;
+        this.showmemberSuggestions = true;
         if (!val) {
-            this.filteredFathers = this.members;
+            this.filteredmembers = this.members;
             this.memberForm.get('parentId')?.setValue('');
             return;
         }
         const search = val.toLowerCase();
-        this.filteredFathers = this.members.filter(m => m.name.toLowerCase().includes(search));
+        this.filteredmembers = this.members.filter(m => m.name.toLowerCase().includes(search));
     }
 
-    selectFather(m: any): void {
-        this.fatherSearch = m.name;
+    selectmember(m: any): void {
+        this.memberSearch = m.name;
         this.memberForm.get('parentId')?.setValue(m.id);
-        this.showFatherSuggestions = false;
+        this.showmemberSuggestions = false;
     }
 
     // Mother Autocomplete
@@ -159,7 +159,7 @@ export class MemberFormComponent implements OnInit {
             } else {
                 this.selectedParentSpouses = [];
             }
-            // Reset mother search when father changes
+            // Reset mother search when member changes
             this.motherSearch = '';
             this.memberForm.get('otherParentId')?.setValue('');
             this.filteredMothers = this.selectedParentSpouses;

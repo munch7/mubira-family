@@ -1,0 +1,90 @@
+<div class="container">
+    <header class="social-header">
+        <div class="header-content">
+            <h1>Social Directory</h1>
+            <p>Connect and interact with all Mubira family members</p>
+        </div>
+        <div class="stats-badge" *ngIf="!isLoading">
+            <span class="count">{{ filteredMembers.length }}</span>
+            <span class="label">Members Found</span>
+        </div>
+    </header>
+
+    <div class="filters-section" *ngIf="!isLoading">
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label>Name</label>
+                <input type="text" [(ngModel)]="filters.name" (input)="applyFilters()" placeholder="Search name...">
+            </div>
+            <div class="filter-group">
+                <label>Contact</label>
+                <input type="text" [(ngModel)]="filters.contact" (input)="applyFilters()" placeholder="Search phone...">
+            </div>
+            <div class="filter-group">
+                <label>Email</label>
+                <input type="text" [(ngModel)]="filters.email" (input)="applyFilters()" placeholder="Search email...">
+            </div>
+            <div class="filter-group">
+                <label>Residence</label>
+                <select [(ngModel)]="filters.residence" (change)="applyFilters()">
+                    <option value="">All Residences</option>
+                    <option *ngFor="let r of residenceOptions" [value]="r">{{ r }}</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Age</label>
+                <select [(ngModel)]="filters.age" (change)="applyFilters()">
+                    <option [ngValue]="null">All Ages</option>
+                    <option *ngFor="let a of ageOptions" [value]="a">{{ a }} yrs</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Generation</label>
+                <select [(ngModel)]="filters.generation" (change)="applyFilters()">
+                    <option [ngValue]="null">All Generations</option>
+                    <option *ngFor="let g of generationOptions" [value]="g">Gen {{ g }}</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn-reset" (click)="resetFilters()">Reset Filters</button>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Fetching members...</p>
+    </div>
+
+    <div class="directory-container" *ngIf="!isLoading">
+        <div class="no-results" *ngIf="filteredMembers.length === 0">
+            <i class="fa fa-search"></i>
+            <p>No members match your current filters.</p>
+        </div>
+
+        <div class="member-grid" *ngIf="filteredMembers.length > 0">
+            <div class="member-card" *ngFor="let m of filteredMembers">
+                <div class="card-header">
+                    <h3>{{ m.name }}</h3>
+                    <span class="age-badge" *ngIf="m.age">{{ m.age }} yrs</span>
+                </div>
+                <div class="card-body">
+                    <div class="info-row" *ngIf="m.phone">
+                        <i class="fa fa-phone"></i>
+                        <span>{{ m.phone }}</span>
+                    </div>
+                    <div class="info-row" *ngIf="m.email">
+                        <i class="fa fa-envelope"></i>
+                        <span>{{ m.email }}</span>
+                    </div>
+                    <div class="info-row" *ngIf="m.residence">
+                        <i class="fa fa-map-marker"></i>
+                        <span>{{ m.residence }}</span>
+                    </div>
+                    <div class="info-row" *ngIf="m.occupation">
+                        <i class="fa fa-briefcase"></i>
+                        <span>{{ m.occupation }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

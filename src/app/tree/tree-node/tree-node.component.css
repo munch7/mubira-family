@@ -7,7 +7,8 @@
 }
 
 .tree-item {
-  margin: 10px 0;
+  margin: 15px 0;
+  position: relative;
 }
 
 /* Member Card - Generation-based colors */
@@ -227,10 +228,36 @@
 
 /* Children Wrapper */
 .children-wrapper {
-  margin-top: 12px;
-  margin-left: 24px;
-  padding-left: 20px;
-  border-left: 3px solid rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  margin-left: 30px;
+  padding-left: 25px;
+  border-left: 2px solid #cbd5e1;
+  position: relative;
+}
+
+/* Horizontal connectors for children */
+.tree-item::before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  /* Aligns with middle of member card header */
+  left: -25px;
+  width: 25px;
+  height: 2px;
+  background: #cbd5e1;
+}
+
+/* Vertical line for the last item to stop it */
+.children-wrapper>.tree-list>.tree-item:last-child::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: -25px;
+  bottom: 0;
+  width: 2px;
+  background: #f8fafc;
+  /* Matches tree-view background to "hide" the lower part of the border-left */
+  z-index: 1;
 }
 
 /* Spouse Sections */

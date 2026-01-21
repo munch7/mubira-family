@@ -1,7 +1,7 @@
 <ul class="tree-list">
   <li *ngFor="let member of members" [class.hidden]="member.isVisible === false" class="tree-item">
-    <div class="member-card" [class.highlighted]="member.isHighlighted" [class.incomplete]="isIncomplete(member)"
-      [attr.data-generation]="member.generation || 1">
+    <div class="member-card" [id]="'member-' + (member.id || member.name)" [class.highlighted]="member.isHighlighted"
+      [class.incomplete]="isIncomplete(member)" [attr.data-generation]="member.generation || 1">
 
       <div class="member-header">
         <button *ngIf="member.children?.length || member.spouse?.length" class="expand-btn" (click)="toggleNode(member)"
