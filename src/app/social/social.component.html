@@ -63,7 +63,7 @@
         <div class="member-grid" *ngIf="filteredMembers.length > 0">
             <div class="member-card" *ngFor="let m of filteredMembers">
                 <div class="card-header">
-                    <h3>{{ m.name }}</h3>
+                    <h3 [ngClass]="'gen-' + m.generation">{{ m.name }}</h3>
                     <span class="age-badge" *ngIf="m.age">{{ m.age }} yrs</span>
                 </div>
                 <div class="card-body">

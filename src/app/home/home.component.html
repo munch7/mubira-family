@@ -1,39 +1,55 @@
-<body>
-
-  <header>
-    <h1>MBARI YA MUBIRA</h1>
-    <p>Bringing generations of our family together.</p>
+<div class="home-container">
+  <header class="hero-section">
+    <div class="hero-content">
+      <h1>MBARI YA MUBIRA</h1>
+      <p class="tagline">Bringing generations of our family together.</p>
+      <div class="hero-actions">
+        <a routerLink="/tree" class="btn-hero">Explore Family Tree</a>
+        <a routerLink="/social" class="btn-hero btn-secondary">Social Directory</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="assets/images/family-tree.png" alt="Mubira Family Tree Illustration">
+    </div>
   </header>
 
-  <div class="tree">
-    <p>
-      The Great Mubira's legacy spans +6 remarkable generations, 
-      weaving a tale of resilience, love, and growth. This lineage is a 
-      testament to timeless bonds and enduring strength. 
-    </p>
-    <p>
-      The Great Mubira and his wives spring a vibrant legacy of 
-      generations. This family thrives as a living testament to 
-      heritage and connection.
-    </p>
-    <p>
-      Through the twists and turns of time, each generation has added its 
-      own flavor to the family’s story-lives intertwined by shared roots 
-      yet shaped by unique paths.
-    </p>
-    <p>
-      Together, they form a colorful tapestry, 
-      where every name and branch brings the legacy of Mubira to life.
-    </p>
-    <p>
-      Explore our application to experience different features on this app
-      only designed for mubira family.
-    </p>
-    <img>
-    <p>
-      * Notifications, News and Alerts come here. *
-    </p>
-    <img>
-  </div>
+  <main class="content-sections">
+    <section class="legacy-card">
+      <div class="legacy-icon">
+        <img src="assets/images/legacy-key.png" alt="Legacy Symbol">
+      </div>
+      <div class="legacy-text">
+        <h2>A Remarkable Legacy</h2>
+        <p>
+          The Great Mubira's legacy spans over <strong>6 remarkable generations</strong>,
+          weaving a tale of resilience, love, and growth. This lineage is a
+          testament to timeless bonds and enduring strength.
+        </p>
+      </div>
+    </section>
 
-</body>
+    <div class="features-grid">
+      <div class="feature-item">
+        <i class="fa fa-users"></i>
+        <h3>Unified Heritage</h3>
+        <p>Connecting long-lost branches and celebrating our shared roots across continents.</p>
+      </div>
+      <div class="feature-item">
+        <i class="fa fa-history"></i>
+        <h3>Living History</h3>
+        <p>Each generation adds its own flavor to the family story, preserving our vibrant culture.</p>
+      </div>
+      <div class="feature-item">
+        <i class="fa fa-bell"></i>
+        <h3>Stay Notified</h3>
+        <p>Get instant alerts on family news, meetings, and important announcements.</p>
+      </div>
+    </div>
+
+    <section class="cta-banner">
+      <h2>Join the Conversation</h2>
+      <p>This application is exclusively designed for the Mubira family to connect and thrive.</p>
+      <a routerLink="/social" class="btn-cta">Go to Social Directory</a>
+    </section>
+  </main>
+</div>
