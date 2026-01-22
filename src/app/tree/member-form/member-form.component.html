@@ -50,6 +50,15 @@
                     </div>
                 </div>
 
+                <!-- Spouse Of (for adding spouse from header) -->
+                <div class="form-group full-width" *ngIf="!isEdit">
+                    <label for="spouseOfId">Spouse of (Optional)</label>
+                    <select id="spouseOfId" formControlName="spouseOfId">
+                        <option value="">Select Spouse</option>
+                        <option *ngFor="let m of members" [value]="m.id">{{ m.name }}</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email" type="email" formControlName="email" placeholder="example@email.com">
@@ -93,6 +102,39 @@
                         <option value="Divorced">Divorced</option>
                         <option value="Widowed">Widowed</option>
                     </select>
+                </div>
+
+                <!-- Spouse Management Section (Edit Mode Only) -->
+                <div class="family-builder full-width" *ngIf="isEdit">
+                    <div class="section-header">
+                        <h3>Spouse Management</h3>
+                    </div>
+
+                    <div class="spouses-list" *ngIf="existingSpouses.length > 0">
+                        <div *ngFor="let spouse of existingSpouses" class="spouse-item">
+                            <span class="spouse-name">{{ spouse.name }}</span>
+                            <button type="button" class="btn-remove small" (click)="removeSpouse(spouse.id)"
+                                title="Unlink Spouse">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="spouse-link-section">
+                        <div class="form-group autocomplete-container">
+                            <label for="spouseLinkSearch">Link Existing Member as Spouse</label>
+                            <input id="spouseLinkSearch" type="text" [value]="spouseLinkSearch"
+                                (input)="onSpouseLinkSearch($event)" (focus)="showSpouseLinkSuggestions = true"
+                                (blur)="onNameBlur()" placeholder="Search for member to link..." autocomplete="off">
+                            <div class="autocomplete-list"
+                                *ngIf="showSpouseLinkSuggestions && filteredSpouseLinks.length > 0">
+                                <div *ngFor="let m of filteredSpouseLinks" (click)="selectSpouseLink(m)"
+                                    class="suggestion-item">
+                                    {{ m.name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

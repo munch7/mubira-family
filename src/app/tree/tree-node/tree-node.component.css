@@ -190,6 +190,21 @@
   font-size: 0.875rem;
 }
 
+.spouse-name-link {
+  cursor: pointer;
+  color: #3b82f6;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.spouse-name-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
 /* Enhanced Info Button */
 .btn-info {
   flex-shrink: 0;
