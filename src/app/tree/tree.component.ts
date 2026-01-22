@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TreeService } from '../shared/tree.service';
@@ -20,6 +20,7 @@ export class TreeComponent implements OnInit, OnDestroy {
   familyTree: Member[] = [];
   isLoading = true;
   searchTerm: string = '';
+  showToTopButton: boolean = false;
 
   selectedMember?: Member;
   showDetailModal = false;
@@ -211,6 +212,24 @@ export class TreeComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const shouldShow = offset > 400;
+
+    if (this.showToTopButton !== shouldShow) {
+      this.showToTopButton = shouldShow;
+      this.cdr.markForCheck();
+    }
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
   onViewMember(member: Member): void {
     this.selectedMember = member;
     this.showDetailModal = true;
@@ -235,6 +254,36 @@ export class TreeComponent implements OnInit, OnDestroy {
     this.initialFormData = undefined;
     this.showFormModal = true;
     this.cdr.markForCheck();
+  }
+
+  onAddSpouse(): void {
+    this.memberToEdit = undefined;
+    this.initialFormData = undefined;
+    // We'll update member-form to show "Spouse of" even when adding from header
+    this.showFormModal = true;
+    this.cdr.markForCheck();
+  }
+
+  onDeleteMember(member: Member): void {
+    if (!member.id) return;
+
+    if (confirm(`Are you sure you want to delete ${member.name}? This will also clean up all family relationships.`)) {
+      this.isLoading = true;
+      this.showDetailModal = false;
+      this.cdr.markForCheck();
+
+      this.familyTreeService.deleteMember(member.id).subscribe({
+        next: () => {
+          this.onSaved(); // Re-use onSaved to refresh tree
+        },
+        error: (err) => {
+          console.error('Delete failed', err);
+          this.isLoading = false;
+          this.cdr.markForCheck();
+          alert('Failed to delete member. Please try again.');
+        }
+      });
+    }
   }
 
   onAddChildRef(member: Member): void {
