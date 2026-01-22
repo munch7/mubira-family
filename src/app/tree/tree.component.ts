@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TreeService } from '../shared/tree.service';
@@ -29,6 +29,7 @@ export class TreeComponent implements OnInit, OnDestroy {
 
   searchResults: { member: Member; parents: string; spouses: string }[] = [];
   allMembers: Member[] = [];
+  showToTopButton: boolean = false;
 
   private destroy$ = new Subject<void>();
 
@@ -58,6 +59,24 @@ export class TreeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  @HostListener('window:scroll', [])
+    onWindowScroll() {
+      const offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      const shouldShow = offset > 400;
+
+      if (this.showToTopButton !== shouldShow) {
+        this.showToTopButton = shouldShow;
+        this.cdr.markForCheck();
+      }
+    }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 
   expandAll(): void {
