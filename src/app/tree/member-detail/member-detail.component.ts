@@ -15,5 +15,4 @@ export class MemberDetailComponent {
     @Output() edit = new EventEmitter<Member>();
     @Output() addChild = new EventEmitter<Member>();
     @Output() addSpouse = new EventEmitter<Member>();
-    @Output() delete = new EventEmitter<Member>();
 }

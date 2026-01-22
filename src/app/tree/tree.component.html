@@ -5,9 +5,6 @@
       <button class="btn-primary" (click)="onAddMember()">
         <i class="fa fa-plus"></i> Add Member
       </button>
-      <button class="btn-primary" (click)="onAddSpouse()">
-        <i class="fa fa-heart"></i> Add Spouse
-      </button>
       <button (click)="expandAll()">Expand All</button>
       <button (click)="collapseAll()">Collapse All</button>
     </div>
@@ -45,16 +42,10 @@
   </div>
   <hr>
   <app-member-detail *ngIf="showDetailModal && selectedMember" [member]="selectedMember" (close)="closeDetail()"
-    (edit)="onEditMember($event)" (addChild)="onAddChildRef($event)" (addSpouse)="onAddSpouseRef($event)"
-    (delete)="onDeleteMember($event)">
+    (edit)="onEditMember($event)" (addChild)="onAddChildRef($event)" (addSpouse)="onAddSpouseRef($event)">
   </app-member-detail>
 
   <app-member-form *ngIf="showFormModal" [member]="memberToEdit" [initialData]="initialFormData" (close)="closeForm()"
     (saved)="onSaved()">
   </app-member-form>
-
-  <!-- To Top Button -->
-  <button class="btn-to-top" [class.show]="showToTopButton" (click)="scrollToTop()" title="Go to top">
-    <i class="fa fa-chevron-up"></i>
-  </button>
 </div>

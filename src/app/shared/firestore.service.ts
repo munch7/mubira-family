@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, setDoc, arrayUnion, arrayRemove, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, setDoc, arrayUnion } from '@angular/fire/firestore';
 import { Observable, from, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Member } from './member.model';
@@ -78,73 +78,11 @@ export class FirestoreService {
     deleteMember(id: string): Observable<void> {
         console.log('🔥 deleteMember() called for ID:', id);
         const memberDoc = doc(this.firestore, `${this.membersCollectionName}/${id}`);
-
-        // First fetch the member to get relationship IDs for cleanup
-        return from(getDoc(memberDoc)).pipe(
-            switchMap(snapshot => {
-                if (!snapshot.exists()) return of(undefined);
-                const data = snapshot.data() as FirestoreMember;
-
-                const cleanupOps: Observable<any>[] = [];
-
-                // 1. Remove from parents' childrenIds
-                if (data.parentIds) {
-                    data.parentIds.forEach(pId => {
-                        cleanupOps.push(this.removeChildFromParent(pId, id));
-                    });
-                }
-
-                // 2. Remove from children's parentIds
-                if (data.childrenIds) {
-                    data.childrenIds.forEach(cId => {
-                        cleanupOps.push(this.removeParentFromChild(cId, id));
-                    });
-                }
-
-                // 3. Remove from spouses' spouseIds
-                if (data.spouseIds) {
-                    data.spouseIds.forEach(sId => {
-                        cleanupOps.push(this.removeSpouse(sId, id));
-                    });
-                }
-
-                if (cleanupOps.length === 0) return of(undefined);
-                return forkJoin(cleanupOps);
-            }),
-            switchMap(() => from(deleteDoc(memberDoc))),
+        return from(deleteDoc(memberDoc)).pipe(
             tap(() => {
-                console.log('🔥 ✅ Member deleted successfully and relationships cleaned up:', id);
-            }),
-            map(() => undefined),
-            catchError(err => {
-                console.error('🔥 ❌ Error deleting member:', err);
-                throw err;
+                console.log('🔥 ✅ Member deleted successfully:', id);
             })
         );
-    }
-
-    removeChildFromParent(parentId: string, childId: string): Observable<void> {
-        console.log('🔥 removeChildFromParent() - Parent:', parentId, 'Child:', childId);
-        const parentDoc = doc(this.firestore, `${this.membersCollectionName}/${parentId}`);
-        return from(updateDoc(parentDoc, {
-            childrenIds: arrayRemove(childId)
-        })).pipe(map(() => undefined));
-    }
-
-    removeParentFromChild(childId: string, parentId: string): Observable<void> {
-        console.log('🔥 removeParentFromChild() - Child:', childId, 'Parent:', parentId);
-        const childDoc = doc(this.firestore, `${this.membersCollectionName}/${childId}`);
-        return from(updateDoc(childDoc, {
-            parentIds: arrayRemove(parentId)
-        })).pipe(map(() => undefined));
-    }
-
-    removeSpouse(memberId: string, spouseId: string): Observable<void> {
-        console.log('🔥 removeSpouse() - Member:', memberId, 'Spouse:', spouseId);
-        const memberDoc = doc(this.firestore, `${this.membersCollectionName}/${memberId}`);
-        return from(updateDoc(memberDoc, {
-            spouseIds: arrayRemove(spouseId)
-        })).pipe(map(() => undefined));
     }
 
     addChildToParent(parentId: string, childId: string): Observable<void> {

@@ -39,12 +39,6 @@ export class MemberFormComponent implements OnInit {
 
     isDuplicateName = false;
 
-    // Existing Spouses State
-    existingSpouses: any[] = [];
-    showSpouseLinkSuggestions = false;
-    spouseLinkSearch = '';
-    filteredSpouseLinks: any[] = [];
-
     constructor(
         private fb: FormBuilder,
         private firestoreService: FirestoreService
@@ -79,11 +73,6 @@ export class MemberFormComponent implements OnInit {
                 this.members.sort((a, b) => a.name.localeCompare(b.name));
                 this.filteredNames = [...this.members];
                 this.filteredmembers = [...this.members];
-                this.filteredSpouseLinks = [...this.members];
-
-                if (this.isEdit && this.member?.spouseIds) {
-                    this.existingSpouses = data.filter(m => this.member?.spouseIds?.includes(m.id));
-                }
             }
         });
     }
@@ -156,65 +145,6 @@ export class MemberFormComponent implements OnInit {
         this.motherSearch = m.name;
         this.memberForm.get('otherParentId')?.setValue(m.id);
         this.showMotherSuggestions = false;
-    }
-
-    // Spouse Linking
-    onSpouseLinkSearch(event: any): void {
-        const val = event.target.value;
-        this.spouseLinkSearch = val;
-        this.showSpouseLinkSuggestions = true;
-        if (!val) {
-            this.filteredSpouseLinks = this.members.filter(m => !this.member?.spouseIds?.includes(m.id));
-            return;
-        }
-        const search = val.toLowerCase();
-        this.filteredSpouseLinks = this.members.filter(m =>
-            m.name.toLowerCase().includes(search) &&
-            !this.member?.spouseIds?.includes(m.id)
-        );
-    }
-
-    selectSpouseLink(m: any): void {
-        if (!this.member?.id) return;
-
-        this.isLoading = true;
-        this.firestoreService.addSpouse(this.member.id, m.id).pipe(
-            switchMap(() => this.firestoreService.addSpouse(m.id, this.member!.id!))
-        ).subscribe({
-            next: () => {
-                this.existingSpouses.push(m);
-                if (!this.member!.spouseIds) this.member!.spouseIds = [];
-                this.member!.spouseIds.push(m.id);
-                this.spouseLinkSearch = '';
-                this.showSpouseLinkSuggestions = false;
-                this.isLoading = false;
-            },
-            error: (err) => {
-                console.error('Error linking spouse', err);
-                this.isLoading = false;
-            }
-        });
-    }
-
-    removeSpouse(spouseId: string): void {
-        if (!this.member?.id) return;
-
-        if (confirm('Are you sure you want to unlink this spouse?')) {
-            this.isLoading = true;
-            this.firestoreService.removeSpouse(this.member.id, spouseId).pipe(
-                switchMap(() => this.firestoreService.removeSpouse(spouseId, this.member!.id!))
-            ).subscribe({
-                next: () => {
-                    this.existingSpouses = this.existingSpouses.filter(s => s.id !== spouseId);
-                    this.member!.spouseIds = this.member!.spouseIds?.filter(id => id !== spouseId);
-                    this.isLoading = false;
-                },
-                error: (err) => {
-                    console.error('Error removing spouse', err);
-                    this.isLoading = false;
-                }
-            });
-        }
     }
 
     private onParentChange(): void {
