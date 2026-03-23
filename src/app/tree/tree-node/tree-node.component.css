@@ -190,6 +190,21 @@
   font-size: 0.875rem;
 }
 
+/* Clickable Spouse */
+.clickable-spouse {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 0, 0, 0.2);
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clickable-spouse:hover {
+  color: #ec4899;
+  text-decoration-color: #ec4899;
+}
+
 /* Enhanced Info Button */
 .btn-info {
   flex-shrink: 0;

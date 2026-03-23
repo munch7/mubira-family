@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../shared/firestore.service';
@@ -18,6 +18,7 @@ export class SocialComponent implements OnInit {
   allMembers: any[] = [];
   filteredMembers: any[] = [];
   isLoading = true;
+  showToTopButton: boolean = false;
 
   // Filter Options
   residenceOptions: string[] = [];
@@ -49,6 +50,19 @@ export class SocialComponent implements OnInit {
         console.error('Error fetching members for social directory', err);
         this.isLoading = false;
       }
+    });
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.showToTopButton = offset > 400;
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
     });
   }
 

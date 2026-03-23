@@ -21,7 +21,7 @@
           <div class="spouse-info" *ngIf="member.spouse && member.spouse.length > 0">
             <i class="fa fa-heart"></i>
             <span *ngFor="let spouse of member.spouse; let last = last">
-              {{ spouse.name }}<span *ngIf="!last">, </span>
+              <a class="clickable-spouse" (click)="viewDetails(spouse)">{{ spouse.name }}</a><span *ngIf="!last">, </span>
             </span>
           </div>
         </div>

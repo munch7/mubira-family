@@ -27,17 +27,22 @@ export class MemberFormComponent implements OnInit {
 
     // Search/Autocomplete State
     memberSearch = '';
-    motherSearch = '';
+    spouseParentSearch = '';
     nameSearch = '';
     showNameSuggestions = false;
     showmemberSuggestions = false;
-    showMotherSuggestions = false;
+    showSpouseParentSuggestions = false;
 
     filteredNames: any[] = [];
     filteredmembers: any[] = [];
-    filteredMothers: any[] = [];
+    filteredSpouseParents: any[] = [];
 
     isDuplicateName = false;
+
+    // Helper to check if adding spouse
+    get isAddingSpouse(): boolean {
+        return !!this.initialData?.spouseOfId;
+    }
 
     constructor(
         private fb: FormBuilder,
@@ -69,7 +74,17 @@ export class MemberFormComponent implements OnInit {
     private loadMembers(): void {
         this.firestoreService.getMembers().subscribe({
             next: (data) => {
-                this.members = data.filter(m => m.id !== this.member?.id);
+                const tempMembers = data;
+                this.members = data.filter(m => m.id !== this.member?.id).map((m: any) => {
+                    let parentNamesStr = '';
+                    if (m.parentIds && m.parentIds.length > 0) {
+                        parentNamesStr = m.parentIds
+                            .map((pid: string) => tempMembers.find((t: any) => t.id === pid)?.name)
+                            .filter((name: any) => !!name)
+                            .join(' & ');
+                    }
+                    return { ...m, parentNamesStr };
+                });
                 this.members.sort((a, b) => a.name.localeCompare(b.name));
                 this.filteredNames = [...this.members];
                 this.filteredmembers = [...this.members];
@@ -124,27 +139,27 @@ export class MemberFormComponent implements OnInit {
         this.showmemberSuggestions = false;
     }
 
-    // Mother Autocomplete
-    onMotherSearch(event: any): void {
+    // Spouse Parent Autocomplete
+    onSpouseParentSearch(event: any): void {
         const val = event.target.value;
-        this.motherSearch = val;
-        this.showMotherSuggestions = true;
+        this.spouseParentSearch = val;
+        this.showSpouseParentSuggestions = true;
 
         const source = this.selectedParentSpouses.length > 0 ? this.selectedParentSpouses : this.members;
 
         if (!val) {
-            this.filteredMothers = source;
+            this.filteredSpouseParents = source;
             this.memberForm.get('otherParentId')?.setValue('');
             return;
         }
         const search = val.toLowerCase();
-        this.filteredMothers = source.filter(m => m.name.toLowerCase().includes(search));
+        this.filteredSpouseParents = source.filter(m => m.name.toLowerCase().includes(search));
     }
 
-    selectMother(m: any): void {
-        this.motherSearch = m.name;
+    selectSpouseParent(m: any): void {
+        this.spouseParentSearch = m.name;
         this.memberForm.get('otherParentId')?.setValue(m.id);
-        this.showMotherSuggestions = false;
+        this.showSpouseParentSuggestions = false;
     }
 
     private onParentChange(): void {
@@ -159,14 +174,15 @@ export class MemberFormComponent implements OnInit {
             } else {
                 this.selectedParentSpouses = [];
             }
-            // Reset mother search when member changes
-            this.motherSearch = '';
+            // Reset spouse parent search when member changes
+            this.spouseParentSearch = '';
             this.memberForm.get('otherParentId')?.setValue('');
-            this.filteredMothers = this.selectedParentSpouses;
+            this.filteredSpouseParents = this.selectedParentSpouses;
         });
     }
 
     private initForm(): void {
+        const isMemberAdd = !this.isEdit && !this.isAddingSpouse;
         this.memberForm = this.fb.group({
             name: [this.member?.name || '', Validators.required],
             email: [this.member?.email || ''],
@@ -176,8 +192,8 @@ export class MemberFormComponent implements OnInit {
             birthDate: [this.member?.birthDate || ''],
             gender: [this.member?.gender || ''],
             relationshipStatus: [this.member?.relationshipStatus || ''],
-            parentId: [this.initialData?.parentId || ''],
-            otherParentId: [''],
+            parentId: [this.initialData?.parentId || '', isMemberAdd ? Validators.required : null],
+            otherParentId: ['', isMemberAdd ? Validators.required : null],
             spouseOfId: [this.initialData?.spouseOfId || '']
         });
     }
@@ -224,6 +240,22 @@ export class MemberFormComponent implements OnInit {
                 },
                 error: (err) => {
                     console.error('Error adding member', err);
+                    this.isLoading = false;
+                }
+            });
+        }
+    }
+
+    deleteMember(): void {
+        if (!this.member?.id) return;
+        if (confirm('Are you sure you want to delete this member?')) {
+            this.isLoading = true;
+            this.firestoreService.deleteMember(this.member.id).subscribe({
+                next: () => {
+                    this.finalizeSubmission();
+                },
+                error: (err) => {
+                    console.error('Error deleting member', err);
                     this.isLoading = false;
                 }
             });

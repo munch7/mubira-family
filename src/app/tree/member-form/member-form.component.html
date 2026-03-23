@@ -26,26 +26,36 @@
                 </div>
 
                 <!-- Relationships first -->
-                <div class="form-group full-width autocomplete-container" *ngIf="!isEdit">
-                    <label for="memberSearch">member (Hierarchy Parent)</label>
+                <div class="form-group full-width autocomplete-container" *ngIf="!isEdit && !isAddingSpouse">
+                    <label for="memberSearch">member (Hierarchy Parent)*</label>
                     <input id="memberSearch" type="text" [value]="memberSearch" (input)="onmemberSearch($event)"
                         (focus)="showmemberSuggestions = true" (blur)="onNameBlur()" placeholder="Search for member..."
                         autocomplete="off">
                     <div class="autocomplete-list" *ngIf="showmemberSuggestions && filteredmembers.length > 0">
-                        <div *ngFor="let m of filteredmembers" (click)="selectmember(m)" class="suggestion-item">
-                            {{ m.name }}
+                        <div *ngFor="let m of filteredmembers" (click)="selectmember(m)" class="suggestion-item"
+                            style="display: flex; flex-direction: column; align-items: flex-start;">
+                            <span class="main-name" style="font-weight: 500;">{{ m.name }}</span>
+                            <span *ngIf="m.parentNamesStr"
+                                style="font-size: 0.75rem; color: #64748b; margin-top: 2px;">Child of: {{
+                                m.parentNamesStr }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group full-width autocomplete-container" *ngIf="!isEdit">
-                    <label for="motherSearch">Mother (Spouse of selection above)</label>
-                    <input id="motherSearch" type="text" [value]="motherSearch" (input)="onMotherSearch($event)"
-                        (focus)="showMotherSuggestions = true" (blur)="onNameBlur()" placeholder="Search for mother..."
-                        autocomplete="off">
-                    <div class="autocomplete-list" *ngIf="showMotherSuggestions && filteredMothers.length > 0">
-                        <div *ngFor="let m of filteredMothers" (click)="selectMother(m)" class="suggestion-item">
-                            {{ m.name }}
+                <div class="form-group full-width autocomplete-container" *ngIf="!isEdit && !isAddingSpouse">
+                    <label for="spouseParentSearch">Spouse (Spouse of selection above)*</label>
+                    <input id="spouseParentSearch" type="text" [value]="spouseParentSearch"
+                        (input)="onSpouseParentSearch($event)" (focus)="showSpouseParentSuggestions = true"
+                        (blur)="onNameBlur()" placeholder="Search for spouse..." autocomplete="off">
+                    <div class="autocomplete-list"
+                        *ngIf="showSpouseParentSuggestions && filteredSpouseParents.length > 0">
+                        <div *ngFor="let m of filteredSpouseParents" (click)="selectSpouseParent(m)"
+                            class="suggestion-item"
+                            style="display: flex; flex-direction: column; align-items: flex-start;">
+                            <span class="main-name" style="font-weight: 500;">{{ m.name }}</span>
+                            <span *ngIf="m.parentNamesStr"
+                                style="font-size: 0.75rem; color: #64748b; margin-top: 2px;">Child of: {{
+                                m.parentNamesStr }}</span>
                         </div>
                     </div>
                 </div>
@@ -99,6 +109,7 @@
 
             <div class="form-actions">
                 <button type="button" class="btn-cancel" (click)="close.emit()">Cancel</button>
+                <button type="button" class="btn-delete" *ngIf="isEdit" (click)="deleteMember()">Delete</button>
                 <button type="submit" class="btn-submit" [disabled]="memberForm.invalid || isLoading">
                     {{ isLoading ? 'Saving...' : (isEdit ? 'Update' : 'Save') }} Member
                 </button>
