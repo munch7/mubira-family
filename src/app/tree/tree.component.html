@@ -142,12 +142,16 @@
             type="button"
             class="mobile-child-card"
             (click)="openMobileMember(child)">
-            <span class="mobile-child-avatar" aria-hidden="true">👤</span>
             <span class="mobile-child-info">
               <strong>{{ child.name }}</strong>
-              <span>Generation {{ child.generation || 'Unknown' }}</span>
-              <span *ngIf="child.spouse?.length">
+              <span *ngIf="child.spouse?.length === 1">
                 Spouse: {{ child.spouse![0].name }}
+              </span>
+              <span *ngIf="child.spouse?.length && child.spouse!.length > 1">
+                Spouses:
+                <ng-container *ngFor="let spouse of child.spouse; let last = last">
+                  {{ spouse.name }}<span *ngIf="!last">, </span>
+                </ng-container>
               </span>
             </span>
             <span class="mobile-card-chevron" aria-hidden="true">›</span>
