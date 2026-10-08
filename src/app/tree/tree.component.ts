@@ -17,6 +17,7 @@ import { Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TreeComponent implements OnInit, OnDestroy {
+  readonly mobileNavigation: { member: Member; view: 'profile' | 'children' }[] = [];
   familyTree: Member[] = [];
   isLoading = true;
   searchTerm: string = '';
@@ -37,6 +38,90 @@ export class TreeComponent implements OnInit, OnDestroy {
     private familyTreeService: TreeService,
     private cdr: ChangeDetectorRef
   ) { }
+
+  get mobileMember(): Member | undefined {
+    return this.mobileNavigation[this.mobileNavigation.length - 1]?.member ??
+      this.familyTree[0];
+  }
+
+  get mobileView(): 'profile' | 'children' {
+    return this.mobileNavigation[this.mobileNavigation.length - 1]?.view ??
+      'profile';
+  }
+
+  get mobileBackLabel(): string {
+    const previous = this.mobileNavigation[this.mobileNavigation.length - 2];
+    const current = this.mobileNavigation[this.mobileNavigation.length - 1];
+    return previous?.member.name ?? current?.member.name ?? '';
+  }
+
+  get mobileChildren(): Member[] {
+    return this.mobileChildGroups.flatMap(group => group.children);
+  }
+
+  get mobileChildGroups(): { label: string; children: Member[] }[] {
+    const member = this.mobileMember;
+    if (!member) {
+      return [];
+    }
+
+    const seen = new Set<Member>();
+    const groups: { label: string; children: Member[] }[] = [];
+
+    for (const spouse of member.spouse ?? []) {
+      const children = (spouse.children ?? []).filter(child => {
+        if (seen.has(child)) {
+          return false;
+        }
+        seen.add(child);
+        return true;
+      });
+
+      if (children.length) {
+        groups.push({
+          label: `Children with ${spouse.name}`,
+          children
+        });
+      }
+    }
+
+    const ungroupedChildren = (member.children ?? []).filter(child => {
+      if (seen.has(child)) {
+        return false;
+      }
+      seen.add(child);
+      return true;
+    });
+
+    if (ungroupedChildren.length) {
+      groups.push({
+        label: member.spouse?.length ? 'Other children' : 'Children',
+        children: ungroupedChildren
+      });
+    }
+
+    return groups;
+  }
+
+  showMobileChildren(): void {
+    const member = this.mobileMember;
+    if (!member) {
+      return;
+    }
+
+    this.mobileNavigation.push({ member, view: 'children' });
+    this.cdr.markForCheck();
+  }
+
+  openMobileMember(member: Member): void {
+    this.mobileNavigation.push({ member, view: 'profile' });
+    this.cdr.markForCheck();
+  }
+
+  backMobileView(): void {
+    this.mobileNavigation.pop();
+    this.cdr.markForCheck();
+  }
 
   ngOnInit(): void {
     this.familyTreeService.getTree$()
@@ -295,6 +380,14 @@ export class TreeComponent implements OnInit, OnDestroy {
 
   selectResult(member: Member): void {
     this.searchResults = [];
+
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      this.mobileNavigation.length = 0;
+      this.mobileNavigation.push({ member, view: 'profile' });
+      this.cdr.markForCheck();
+      return;
+    }
+
     this.expandPathToMember(member);
 
     // Highlight and scroll

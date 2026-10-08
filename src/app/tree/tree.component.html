@@ -1,4 +1,5 @@
 <div class="tree-container">
+  <div class="mobile-family-title">MUBIRA FAMILY</div>
   <div class="tree-header">
     <h1>Family Tree</h1>
     <div class="actions">
@@ -40,6 +41,121 @@
   <div *ngIf="!isLoading" class="tree-view">
     <app-tree-node [members]="familyTree" (viewMember)="onViewMember($event)"></app-tree-node>
   </div>
+
+  <main *ngIf="!isLoading && mobileMember as member" class="mobile-family-view">
+    <div class="mobile-view-heading">
+      <button
+        *ngIf="mobileNavigation.length"
+        type="button"
+        class="mobile-back-button"
+        (click)="backMobileView()"
+        aria-label="Go back">
+        <span aria-hidden="true">←</span>
+        <span>{{ mobileBackLabel }}</span>
+      </button>
+      <h2 *ngIf="!mobileNavigation.length">{{ member.name }}</h2>
+    </div>
+
+    <ng-container *ngIf="mobileView === 'profile'; else mobileChildrenList">
+      <article class="mobile-member-profile">
+        <div class="mobile-member-avatar">
+          <img
+            *ngIf="member.profilePictureUrl; else defaultMobileAvatar"
+            [src]="member.profilePictureUrl"
+            [alt]="member.name">
+          <ng-template #defaultMobileAvatar>
+            <span aria-hidden="true">👤</span>
+          </ng-template>
+        </div>
+        <h2>{{ member.name }}</h2>
+        <p class="mobile-generation">
+          Generation {{ member.generation || 'Unknown' }}
+        </p>
+      </article>
+
+      <section class="mobile-family-section" *ngIf="member.spouse?.length">
+        <h3>💍 Spouse{{ member.spouse!.length === 1 ? '' : 's' }}</h3>
+        <button
+          *ngFor="let spouse of member.spouse"
+          type="button"
+          class="mobile-spouse-link"
+          (click)="openMobileMember(spouse)">
+          {{ spouse.name }}
+          <span aria-hidden="true">›</span>
+        </button>
+      </section>
+
+      <section class="mobile-family-section">
+        <button
+          type="button"
+          class="mobile-children-link"
+          (click)="showMobileChildren()"
+          [disabled]="!mobileChildren.length">
+          <span>👨‍👩‍👧 Children ({{ mobileChildren.length }})</span>
+          <span aria-hidden="true">›</span>
+        </button>
+      </section>
+
+      <details class="mobile-extra-info">
+        <summary>More information</summary>
+        <dl>
+          <ng-container *ngIf="member.email">
+            <dt>Email</dt><dd>{{ member.email }}</dd>
+          </ng-container>
+          <ng-container *ngIf="member.phone">
+            <dt>Phone</dt><dd>{{ member.phone }}</dd>
+          </ng-container>
+          <ng-container *ngIf="member.occupation">
+            <dt>Occupation</dt><dd>{{ member.occupation }}</dd>
+          </ng-container>
+          <ng-container *ngIf="member.residence">
+            <dt>Residence</dt><dd>{{ member.residence }}</dd>
+          </ng-container>
+          <ng-container *ngIf="member.birthDate">
+            <dt>Birth date</dt><dd>{{ member.birthDate | date:'mediumDate' }}</dd>
+          </ng-container>
+          <ng-container *ngIf="member.gender">
+            <dt>Gender</dt><dd>{{ member.gender }}</dd>
+          </ng-container>
+          <ng-container *ngIf="member.relationshipStatus">
+            <dt>Relationship status</dt><dd>{{ member.relationshipStatus }}</dd>
+          </ng-container>
+          <ng-container *ngIf="member.bio">
+            <dt>About</dt><dd>{{ member.bio }}</dd>
+          </ng-container>
+        </dl>
+      </details>
+    </ng-container>
+
+    <ng-template #mobileChildrenList>
+      <section class="mobile-children-page">
+        <h2>Children of {{ member.name }}</h2>
+        <p *ngIf="!mobileChildren.length" class="mobile-empty-state">
+          No children listed.
+        </p>
+        <section
+          *ngFor="let group of mobileChildGroups"
+          class="mobile-child-group">
+          <h3>{{ group.label }}</h3>
+          <button
+            *ngFor="let child of group.children"
+            type="button"
+            class="mobile-child-card"
+            (click)="openMobileMember(child)">
+            <span class="mobile-child-avatar" aria-hidden="true">👤</span>
+            <span class="mobile-child-info">
+              <strong>{{ child.name }}</strong>
+              <span>Generation {{ child.generation || 'Unknown' }}</span>
+              <span *ngIf="child.spouse?.length">
+                Spouse: {{ child.spouse![0].name }}
+              </span>
+            </span>
+            <span class="mobile-card-chevron" aria-hidden="true">›</span>
+          </button>
+        </section>
+      </section>
+    </ng-template>
+  </main>
   <hr>
   <app-member-detail *ngIf="showDetailModal && selectedMember" [member]="selectedMember" (close)="closeDetail()"
     (edit)="onEditMember($event)" (addChild)="onAddChildRef($event)" (addSpouse)="onAddSpouseRef($event)">
