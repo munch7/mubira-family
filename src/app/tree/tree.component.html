@@ -58,15 +58,6 @@
 
     <ng-container *ngIf="mobileView === 'profile'; else mobileChildrenList">
       <article class="mobile-member-profile">
-        <div class="mobile-member-avatar">
-          <img
-            *ngIf="member.profilePictureUrl; else defaultMobileAvatar"
-            [src]="member.profilePictureUrl"
-            [alt]="member.name">
-          <ng-template #defaultMobileAvatar>
-            <span aria-hidden="true">👤</span>
-          </ng-template>
-        </div>
         <h2>{{ member.name }}</h2>
         <p class="mobile-generation">
           Generation {{ member.generation || 'Unknown' }}
