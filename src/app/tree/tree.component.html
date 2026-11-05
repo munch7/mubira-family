@@ -50,10 +50,10 @@
         class="mobile-back-button"
         (click)="backMobileView()"
         aria-label="Go back">
-        <span aria-hidden="true">←</span>
-        <span>{{ mobileBackLabel }}</span>
+        <span aria-hidden="true">← Back</span>
+        <!-- <span>{{ mobileBackLabel }}</span> -->
       </button>
-      <h2 *ngIf="!mobileNavigation.length">{{ member.name }}</h2>
+      <!-- <h2 *ngIf="!mobileNavigation.length">{{ member.name }}</h2> -->
     </div>
 
     <ng-container *ngIf="mobileView === 'profile'; else mobileChildrenList">
@@ -65,57 +65,39 @@
       </article>
 
       <section class="mobile-family-section" *ngIf="member.spouse?.length">
-        <h3>💍 Spouse{{ member.spouse!.length === 1 ? '' : 's' }}</h3>
-        <button
-          *ngFor="let spouse of member.spouse"
-          type="button"
-          class="mobile-spouse-link"
-          (click)="openMobileMember(spouse)">
-          {{ spouse.name }}
-          <span aria-hidden="true">›</span>
-        </button>
+        <!-- <h3>💍 Spouse{{ member.spouse!.length === 1 ? '' : 's' }}</h3> -->
+
+        <div class="mobile-spouse-group" *ngFor="let spouse of member.spouse">
+          <!-- <div class="mobile-spouse-link" aria-label="Spouse {{ spouse.name }}">
+            {{ spouse.name }}
+            <span aria-hidden="true">›</span>
+          </div> -->
+
+          <div class="mobile-spouse-children" *ngIf="spouse.children?.length">
+            <h4>Children with {{ spouse.name }}</h4>
+            <button
+              *ngFor="let child of spouse.children"
+              type="button"
+              class="mobile-spouse-child-card"
+              (click)="openMobileMember(child)">
+              <span class="mobile-child-info">
+                <strong>{{ child.name }}</strong>
+                <span *ngIf="child.spouse?.length === 1">
+                  Spouse: {{ child.spouse![0].name }}
+                </span>
+                <span *ngIf="child.spouse?.length && child.spouse!.length > 1">
+                  Spouses:
+                  <ng-container *ngFor="let spouseChild of child.spouse; let last = last">
+                    {{ spouseChild.name }}<span *ngIf="!last">, </span>
+                  </ng-container>
+                </span>
+              </span>
+              <span class="mobile-card-chevron" aria-hidden="true">›</span>
+            </button>
+          </div>
+        </div>
       </section>
 
-      <section class="mobile-family-section">
-        <button
-          type="button"
-          class="mobile-children-link"
-          (click)="showMobileChildren()"
-          [disabled]="!mobileChildren.length">
-          <span>👨‍👩‍👧 Children ({{ mobileChildren.length }})</span>
-          <span aria-hidden="true">›</span>
-        </button>
-      </section>
-
-      <details class="mobile-extra-info">
-        <summary>More information</summary>
-        <dl>
-          <ng-container *ngIf="member.email">
-            <dt>Email</dt><dd>{{ member.email }}</dd>
-          </ng-container>
-          <ng-container *ngIf="member.phone">
-            <dt>Phone</dt><dd>{{ member.phone }}</dd>
-          </ng-container>
-          <ng-container *ngIf="member.occupation">
-            <dt>Occupation</dt><dd>{{ member.occupation }}</dd>
-          </ng-container>
-          <ng-container *ngIf="member.residence">
-            <dt>Residence</dt><dd>{{ member.residence }}</dd>
-          </ng-container>
-          <ng-container *ngIf="member.birthDate">
-            <dt>Birth date</dt><dd>{{ member.birthDate | date:'mediumDate' }}</dd>
-          </ng-container>
-          <ng-container *ngIf="member.gender">
-            <dt>Gender</dt><dd>{{ member.gender }}</dd>
-          </ng-container>
-          <ng-container *ngIf="member.relationshipStatus">
-            <dt>Relationship status</dt><dd>{{ member.relationshipStatus }}</dd>
-          </ng-container>
-          <ng-container *ngIf="member.bio">
-            <dt>About</dt><dd>{{ member.bio }}</dd>
-          </ng-container>
-        </dl>
-      </details>
     </ng-container>
 
     <ng-template #mobileChildrenList>

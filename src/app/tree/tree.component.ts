@@ -85,21 +85,6 @@ export class TreeComponent implements OnInit, OnDestroy {
       }
     }
 
-    const ungroupedChildren = (member.children ?? []).filter(child => {
-      if (seen.has(child)) {
-        return false;
-      }
-      seen.add(child);
-      return true;
-    });
-
-    if (ungroupedChildren.length) {
-      groups.push({
-        label: member.spouse?.length ? 'Other children' : 'Children',
-        children: ungroupedChildren
-      });
-    }
-
     return groups;
   }
 

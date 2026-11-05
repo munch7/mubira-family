@@ -22,8 +22,7 @@ export class SocialComponent implements OnInit {
 
   // Filter Options
   residenceOptions: string[] = [];
-  ageOptions: number[] = [];
-  generationOptions: number[] = [];
+  ageRangeOptions: { min: number; max: number; label: string }[] = [];
 
   // Filters
   filters = {
@@ -31,17 +30,23 @@ export class SocialComponent implements OnInit {
     contact: '',
     email: '',
     residence: '',
-    age: null as number | null,
-    generation: null as number | null
+    ageRange: null as { min: number; max: number } | null
   };
 
   ngOnInit(): void {
     this.firestoreService.getMembers().subscribe({
       next: (members) => {
-        this.allMembers = members.map(m => ({
-          ...m,
-          age: this.calculateAge(m.birthDate)
-        }));
+        this.allMembers = members.map(m => {
+          const parents = (m.parentIds ?? [])
+            .map(parentId => members.find(member => member.id === parentId))
+            .filter((parent): parent is FirestoreMember => !!parent);
+
+          return {
+            ...m,
+            age: this.calculateAge(m.birthDate),
+            parents
+          };
+        });
         this.extractFilterOptions();
         this.applyFilters();
         this.isLoading = false;
@@ -74,19 +79,25 @@ export class SocialComponent implements OnInit {
         .filter(r => !!r)
     )).sort();
 
-    // Unique Ages
-    this.ageOptions = Array.from(new Set(
-      this.allMembers
-        .map(m => m.age)
-        .filter(a => a !== null)
-    )).sort((a, b) => a - b);
+    const allAges = this.allMembers
+      .map(m => m.age)
+      .filter((a): a is number => a !== null && a !== undefined)
+      .sort((a, b) => a - b);
 
-    // Unique Generations
-    this.generationOptions = Array.from(new Set(
-      this.allMembers
-        .map(m => m.generation)
-        .filter(g => g !== undefined && g !== null)
-    )).sort((a, b) => a - b);
+    const minAge = allAges.length ? Math.floor(Math.min(...allAges) / 10) * 10 : 0;
+    const maxAge = allAges.length ? Math.ceil(Math.max(...allAges) / 10) * 10 : 10;
+    const options: { min: number; max: number; label: string }[] = [];
+
+    for (let start = minAge; start <= maxAge; start += 10) {
+      const end = start + 9;
+      options.push({
+        min: start,
+        max: end,
+        label: `${start}-${end} yrs`
+      });
+    }
+
+    this.ageRangeOptions = options;
   }
 
   calculateAge(birthDate?: string): number | null {
@@ -108,10 +119,16 @@ export class SocialComponent implements OnInit {
       const contactMatch = !this.filters.contact || (m.phone && m.phone.includes(this.filters.contact));
       const emailMatch = !this.filters.email || (m.email && m.email.toLowerCase().includes(this.filters.email.toLowerCase()));
       const residenceMatch = !this.filters.residence || m.residence === this.filters.residence;
-      const ageMatch = this.filters.age === null || m.age === Number(this.filters.age);
-      const generationMatch = this.filters.generation === null || m.generation === Number(this.filters.generation);
 
-      return nameMatch && contactMatch && emailMatch && residenceMatch && ageMatch && generationMatch;
+      const ageRange = this.filters.ageRange;
+      const ageMatch = !ageRange || (
+        m.age !== null &&
+        m.age !== undefined &&
+        m.age >= ageRange.min &&
+        m.age <= ageRange.max
+      );
+
+      return nameMatch && contactMatch && emailMatch && residenceMatch && ageMatch;
     });
   }
 
@@ -121,8 +138,7 @@ export class SocialComponent implements OnInit {
       contact: '',
       email: '',
       residence: '',
-      age: null,
-      generation: null
+      ageRange: null
     };
     this.applyFilters();
   }

@@ -26,25 +26,19 @@
             </div>
             <div class="filter-group">
                 <label>Residence</label>
-                <select [(ngModel)]="filters.residence" (change)="applyFilters()">
+                <select [(ngModel)]="filters.residence" (change)="applyFilters()" title="Filter by residence" aria-label="Filter by residence">
                     <option value="">All Residences</option>
                     <option *ngFor="let r of residenceOptions" [value]="r">{{ r }}</option>
                 </select>
             </div>
             <div class="filter-group">
-                <label>Age</label>
-                <select [(ngModel)]="filters.age" (change)="applyFilters()">
+                <label>Age Range</label>
+                <select [(ngModel)]="filters.ageRange" (change)="applyFilters()" title="Filter by age range" aria-label="Filter by age range">
                     <option [ngValue]="null">All Ages</option>
-                    <option *ngFor="let a of ageOptions" [value]="a">{{ a }} yrs</option>
+                    <option *ngFor="let range of ageRangeOptions" [ngValue]="range">{{ range.label }}</option>
                 </select>
             </div>
-            <div class="filter-group">
-                <label>Generation</label>
-                <select [(ngModel)]="filters.generation" (change)="applyFilters()">
-                    <option [ngValue]="null">All Generations</option>
-                    <option *ngFor="let g of generationOptions" [value]="g">Gen {{ g }}</option>
-                </select>
-            </div>
+
         </div>
         <button class="btn-reset" (click)="resetFilters()">Reset Filters</button>
     </div>
@@ -63,7 +57,10 @@
         <div class="member-grid" *ngIf="filteredMembers.length > 0">
             <div class="member-card" *ngFor="let m of filteredMembers">
                 <div class="card-header">
-                    <h3 [ngClass]="'gen-' + m.generation">{{ m.name }}</h3>
+                    <span class="generation-tag" [ngClass]="'gen-' + m.generation">Gen {{ m.generation || 'N/A' }}</span>
+                    <h3 [ngClass]="'gen-' + m.generation">
+                        {{ m.name }} <span class="parent-name">wa {{ m.parents?.[0]?.name || 'Unknown' }}</span>
+                    </h3>
                     <span class="age-badge" *ngIf="m.age">{{ m.age }} yrs</span>
                 </div>
                 <div class="card-body">

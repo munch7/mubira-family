@@ -534,7 +534,14 @@ strong {
     font-size: 1rem;
   }
 
+  .mobile-spouse-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
   .mobile-spouse-link,
+  .mobile-spouse-child-card,
   .mobile-children-link {
     display: flex;
     align-items: center;
@@ -556,9 +563,31 @@ strong {
   }
 
   .mobile-spouse-link span,
-  .mobile-children-link > span:last-child {
+  .mobile-children-link > span:last-child,
+  .mobile-spouse-child-card .mobile-card-chevron {
     color: #64748b;
     font-size: 1.5rem;
+  }
+
+  .mobile-spouse-children {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .mobile-spouse-children h4 {
+    margin: 0;
+    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .mobile-spouse-child-card {
+    min-height: 0;
+    padding: 0.7rem 0.8rem;
+    background: #f8fafc;
   }
 
   .mobile-children-link {
