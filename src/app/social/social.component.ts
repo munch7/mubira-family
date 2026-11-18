@@ -129,7 +129,12 @@ export class SocialComponent implements OnInit {
       );
 
       return nameMatch && contactMatch && emailMatch && residenceMatch && ageMatch;
-    });
+    }).sort((a, b) => this.contactCompleteness(b) - this.contactCompleteness(a));
+  }
+
+  private contactCompleteness(member: any): number {
+    return Number(typeof member.phone === 'string' && member.phone.trim().length > 0) +
+      Number(typeof member.email === 'string' && member.email.trim().length > 0);
   }
 
   resetFilters(): void {

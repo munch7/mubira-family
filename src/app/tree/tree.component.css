@@ -516,10 +516,55 @@ strong {
     overflow-wrap: anywhere;
   }
 
+  .mobile-member-profile h2.gen-1,
+  .mobile-child-info strong.gen-1 {
+    color: var(--gen-1-color);
+  }
+
+  .mobile-member-profile h2.gen-2,
+  .mobile-child-info strong.gen-2 {
+    color: var(--gen-2-color);
+  }
+
+  .mobile-member-profile h2.gen-3,
+  .mobile-child-info strong.gen-3 {
+    color: var(--gen-3-color);
+  }
+
+  .mobile-member-profile h2.gen-4,
+  .mobile-child-info strong.gen-4 {
+    color: var(--gen-4-color);
+  }
+
+  .mobile-member-profile h2.gen-5,
+  .mobile-child-info strong.gen-5 {
+    color: var(--gen-5-color);
+  }
+
   .mobile-generation {
     margin: 0.5rem 0 0;
     color: #64748b;
     font-size: 1rem;
+  }
+
+  .mobile-generation.gen-1 {
+    color: var(--gen-1-color);
+  }
+
+  .mobile-generation.gen-2 {
+    color: var(--gen-2-color);
+  }
+
+  .mobile-generation.gen-3 {
+    color: var(--gen-3-color);
+  }
+
+  .mobile-generation.gen-4 {
+    color: var(--gen-4-color);
+  }
+
+  .mobile-generation.gen-5 {
+    color: var(--gen-5-color);
   }
 
   .mobile-family-section {

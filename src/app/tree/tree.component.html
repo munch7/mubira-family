@@ -58,8 +58,8 @@
 
     <ng-container *ngIf="mobileView === 'profile'; else mobileChildrenList">
       <article class="mobile-member-profile">
-        <h2>{{ member.name }}</h2>
-        <p class="mobile-generation">
+        <h2 [ngClass]="'gen-' + (member.generation || 1)">{{ member.name }}</h2>
+        <p class="mobile-generation" [ngClass]="'gen-' + (member.generation || 1)">
           Generation {{ member.generation || 'Unknown' }}
         </p>
       </article>
@@ -81,7 +81,7 @@
               class="mobile-spouse-child-card"
               (click)="openMobileMember(child)">
               <span class="mobile-child-info">
-                <strong>{{ child.name }}</strong>
+                <strong [ngClass]="'gen-' + (child.generation || 1)">{{ child.name }}</strong>
                 <span *ngIf="child.spouse?.length === 1">
                   Spouse: {{ child.spouse![0].name }}
                 </span>
@@ -116,7 +116,7 @@
             class="mobile-child-card"
             (click)="openMobileMember(child)">
             <span class="mobile-child-info">
-              <strong>{{ child.name }}</strong>
+              <strong [ngClass]="'gen-' + (child.generation || 1)">{{ child.name }}</strong>
               <span *ngIf="child.spouse?.length === 1">
                 Spouse: {{ child.spouse![0].name }}
               </span>

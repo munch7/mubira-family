@@ -69,13 +69,15 @@ export class TreeComponent implements OnInit, OnDestroy {
     const groups: { label: string; children: Member[] }[] = [];
 
     for (const spouse of member.spouse ?? []) {
-      const children = (spouse.children ?? []).filter(child => {
-        if (seen.has(child)) {
-          return false;
-        }
-        seen.add(child);
-        return true;
-      });
+      const children = (spouse.children ?? [])
+        .filter(child => {
+          if (seen.has(child)) {
+            return false;
+          }
+          seen.add(child);
+          return true;
+        })
+        .sort((a, b) => this.contactCompleteness(b) - this.contactCompleteness(a));
 
       if (children.length) {
         groups.push({
@@ -86,6 +88,11 @@ export class TreeComponent implements OnInit, OnDestroy {
     }
 
     return groups;
+  }
+
+  private contactCompleteness(member: Member): number {
+    return Number(typeof member.phone === 'string' && member.phone.trim().length > 0) +
+      Number(typeof member.email === 'string' && member.email.trim().length > 0);
   }
 
   showMobileChildren(): void {
